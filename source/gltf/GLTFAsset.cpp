@@ -25,8 +25,7 @@
 using namespace flow;
 
 
-GLTFAsset::GLTFAsset(const std::string& name /* = "" */) :
-	_name(name),
+GLTFAsset::GLTFAsset() :
 	_version(Version::GLTF_2_0),
 	_pMainScene(nullptr)
 {
@@ -195,29 +194,27 @@ json GLTFAsset::toJSON() const
 
 	auto result = json({
 		{ "asset", asset },
-		{ "scenes", _elementsToArray(_scenes) },
-		{ "nodes", _elementsToArray(_nodes) },
-		{ "meshes", _elementsToArray(_meshes) },
-		{ "skins", _elementsToArray(_skins) },
-		{ "cameras", _elementsToArray(_cameras) },
-		{ "buffers", _elementsToArray(_buffers) },
-		{ "bufferViews", _elementsToArray(_bufferViews) },
-		{ "accessors", _elementsToArray(_accessors) },
-		{ "materials", _elementsToArray(_materials) },
-		{ "textures", _elementsToArray(_textures) },
-		{ "images", _elementsToArray(_images) },
-		{ "samplers", _elementsToArray(_samplers) },
-//		{ "animations", _elementsToArray(_animations) }
 	});
-
-	if (!_name.empty()) {
-		result["name"] = _name;
-	}
 
 	if (_pMainScene) {
 		result["scene"] = _pMainScene->index();
 	}
 
+	_insertElements(result, "scenes", _scenes);
+	_insertElements(result, "nodes", _nodes);
+	_insertElements(result, "meshes", _meshes);
+	_insertElements(result, "skins", _skins);
+	_insertElements(result, "cameras", _cameras);
+	_insertElements(result, "buffers", _buffers);
+	_insertElements(result, "bufferViews", _bufferViews);
+	_insertElements(result, "accessors", _accessors);
+	_insertElements(result, "materials", _materials);
+	_insertElements(result, "textures", _textures);
+	_insertElements(result, "images", _images);
+	_insertElements(result, "samplers", _samplers);
+	//_insertElements(result, "animations", _animations);
+
+	
 	return result;
 }
 
@@ -227,14 +224,18 @@ std::string GLTFAsset::toString(int indent /* = -1 */) const
 }
 
 template<typename T>
-json GLTFAsset::_elementsToArray(const std::vector<T*>& vector) const
+void GLTFAsset::_insertElements(json& jsonObj, const std::string& propName, const std::vector<T*>& vector) const
 {
+	if (vector.empty()) {
+		return;
+	}
+
 	auto arr = json::array();
 	for (auto it = vector.begin(); it != vector.end(); ++it) {
 		arr.push_back((*it)->toJSON());
 	}
 
-	return arr;
+	jsonObj[propName] = arr;
 }
 
 template<typename T>

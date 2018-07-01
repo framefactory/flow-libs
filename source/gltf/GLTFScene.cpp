@@ -33,13 +33,18 @@ void GLTFScene::addNode(const GLTFNode* pNode)
 
 json GLTFScene::toJSON() const
 {
-	auto nodeArray = json::array();
-	for (auto it = _nodes.begin(); it != _nodes.end(); ++it) {
-		nodeArray.push_back((*it)->index());
+	auto result = json::object();
+
+	if (!_name.empty()) {
+		result["name"] = _name;
+	}
+	if (!_nodes.empty()) {
+		auto nodeArray = json::array();
+		for (auto it = _nodes.begin(); it != _nodes.end(); ++it) {
+			nodeArray.push_back((*it)->index());
+		}
+		result["nodes"] = nodeArray;
 	}
 
-	return json({
-		{ "name", _name },
-		{ "nodes", nodeArray }
-	});
+	return result;
 }

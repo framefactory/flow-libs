@@ -62,7 +62,7 @@ namespace flow
 
 		typedef std::vector<GLTFAnimation*> animationVec_t;
 
-		GLTFAsset(const std::string& name = "");
+		GLTFAsset();
 		virtual ~GLTFAsset();
 
 		void setMainScene(const GLTFScene* pScene);
@@ -97,14 +97,13 @@ namespace flow
 
 	private:
 		template<typename T>
-		json _elementsToArray(const std::vector<T*>& vector) const;
+		void _insertElements(json& jsonObj, const std::string& propName, const std::vector<T*>& vector) const;
 
 		template<typename T>
 		void _deleteVectorOfPointers(std::vector<T*>& vector);
 
 		const char* _versionToString() const;
 
-		std::string _name;
 		Version _version;
 		std::string _generator;
 		std::string _copyright;

@@ -17,7 +17,7 @@ using namespace flow;
 
 int main(int argc, char** ppArgv)
 {
-	GLTFAsset asset("hello");
+	GLTFAsset asset;
 	asset.setGenerator("https://github.com/framelab/flow-libs");
 	asset.setCopyright("(c) 2018 Frame Factory GmbH");
 

@@ -47,7 +47,9 @@ namespace flow
 
 	public:
 		void setType(Type type, ComponentType componentType);
-		void setAccess(size_t byteOffset, size_t byteStride);
+		void setAccess(size_t elementCount, size_t byteOffset, size_t byteStride = 0);
+		void setMin(const std::vector<float>& min);
+		void setMax(const std::vector<float>& max);
 
 		virtual json toJSON() const;
 

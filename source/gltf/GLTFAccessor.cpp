@@ -32,10 +32,21 @@ void GLTFAccessor::setType(Type type, ComponentType componentType)
 	_componentType = componentType;
 }
 
-void GLTFAccessor::setAccess(size_t byteOffset, size_t byteStride)
+void GLTFAccessor::setAccess(size_t elementCount, size_t byteOffset, size_t byteStride /* = 0 */)
 {
+	_count = elementCount;
 	_byteOffset = _byteOffset;
 	_byteStride = _byteStride;
+}
+
+void GLTFAccessor::setMin(const std::vector<float>& min)
+{
+	_min = min;
+}
+
+void GLTFAccessor::setMax(const std::vector<float>& max)
+{
+	_max = max;
 }
 
 json GLTFAccessor::toJSON() const
@@ -44,13 +55,18 @@ json GLTFAccessor::toJSON() const
 		{ "bufferView", _pBufferView->index() },
 		{ "byteOffset", _byteOffset },
 		{ "componentType", (size_t)_componentType },
-		{ "count", _count },
-		{ "min", _min },
-		{ "max", _max }
+		{ "type", typeName(_type) },
+		{ "count", _count }
 	});
 
 	if (_byteStride > 0) {
 		result["byteStride"] = _byteStride;
+	}
+	if (!_min.empty()) {
+		result["min"] = _min;
+	}
+	if (!_max.empty()) {
+		result["max"] = _max;
 	}
 
 	return result;

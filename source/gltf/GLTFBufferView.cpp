@@ -20,10 +20,10 @@ GLTFBufferView::GLTFBufferView(size_t index, const GLTFBuffer* pBuffer) :
 {
 }
 
-void GLTFBufferView::setView(size_t offset, size_t length)
+void GLTFBufferView::setView(size_t byteOffset, size_t byteLength)
 {
-	_byteOffset = offset;
-	_byteLength = length;
+	_byteOffset = byteOffset;
+	_byteLength = byteLength;
 }
 
 void GLTFBufferView::setTarget(Target target)

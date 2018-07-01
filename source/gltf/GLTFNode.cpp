@@ -89,15 +89,19 @@ void GLTFNode::setTRS(const Vector3f& translation, const Quaternion4f& rotation,
 
 json GLTFNode::toJSON() const
 {
-	auto nodeArray = json::array();
-	for (auto it = _children.begin(); it != _children.end(); ++it) {
-		nodeArray.push_back((*it)->index());
+	auto result = json::object();
+	
+	if (!_name.empty()) {
+		result["name"] = _name;
 	}
+	if (!_children.empty()) {
+		auto nodeArray = json::array();
+		for (auto it = _children.begin(); it != _children.end(); ++it) {
+			nodeArray.push_back((*it)->index());
+		}
 
-	auto result = json({
-		{ "name", _name },
-		{ "children", nodeArray }
-	});
+		result["children"] = nodeArray;
+	}
 
 	if (_pMatrix) {
 		result["matrix"] = _pMatrix->toJSON();

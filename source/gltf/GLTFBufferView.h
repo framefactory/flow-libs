@@ -32,7 +32,7 @@ namespace flow
 		virtual ~GLTFBufferView() { }
 
 	public:
-		void setView(size_t offset, size_t length);
+		void setView(size_t byteOffset, size_t byteLength);
 		void setTarget(Target target);
 
 		virtual json toJSON() const;
