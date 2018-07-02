@@ -14,17 +14,22 @@
 
 namespace flow
 {
+	class GLTFBufferView;
+
 	class GLTFBuffer : public GLTFElement
 	{
 		friend class GLTFAsset;
-		friend class GLTFBufferView;
 
 	protected:
-		GLTFBuffer(size_t index, size_t byteLength);
-		virtual ~GLTFBuffer() {};
+		GLTFBuffer(size_t index, const std::string& name = std::string{});
+		virtual ~GLTFBuffer() { };
 
 	public:
+		void setByteLength(size_t byteLength);
 		void setUri(const std::string& uri);
+
+		size_t byteLength() const { return _byteLength; }
+		const std::string& uri() const { return _uri; }
 
 		virtual json toJSON() const;
 

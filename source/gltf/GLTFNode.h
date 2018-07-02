@@ -29,31 +29,33 @@ namespace flow
 		friend class GLTFAsset;
 
 	protected:
-		GLTFNode(size_t index, const std::string& name = "");
+		GLTFNode(size_t index, const std::string& name = std::string{});
 		virtual ~GLTFNode();
 
 	public:
-		void setName(const std::string& name);
-		void addChild(const GLTFNode* pNode);
+		typedef std::vector<const GLTFNode*> nodeVec_t;
 
+		void addChild(const GLTFNode* pNode);
 		void setMatrix(const Matrix4f& matrix);
 		void setTranslation(const Vector3f& translation);
 		void setRotation(const Quaternion4f& rotation);
 		void setScale(const Vector3f& scale);
 		void setTRS(const Vector3f& translation, const Quaternion4f& rotation, const Vector3f& scale);
 
+		const nodeVec_t& children() const { return _children; }
+		const Matrix4f* matrix() const { return _pMatrix; }
+		const Vector3f* translation() const { return _pTranslation; }
+		const Quaternion4f* rotation() const { return _pRotation; }
+		const Vector3f* scale() const { return _pScale; }
+
 		virtual json toJSON() const;
 
 	private:
-		std::string _name;
-
+		nodeVec_t _children;
 		Matrix4f* _pMatrix;
 		Vector3f* _pTranslation;
 		Quaternion4f* _pRotation;
 		Vector3f* _pScale;
-
-		typedef std::vector<const GLTFNode*> nodeVec_t;
-		nodeVec_t _children;
 	};
 
 	class GLTFMeshNode : public GLTFNode
@@ -61,7 +63,7 @@ namespace flow
 		friend class GLTFAsset;
 
 	protected:
-		GLTFMeshNode(size_t index, const GLTFMesh* pMesh, const std::string& name = "");
+		GLTFMeshNode(size_t index, const GLTFMesh* pMesh, const std::string& name = std::string{});
 		virtual ~GLTFMeshNode() { }
 
 		virtual json toJSON() const;
@@ -75,7 +77,7 @@ namespace flow
 		friend class GLTFAsset;
 
 	protected:
-		GLTFCameraNode(size_t index, const GLTFCamera* pCamera, const std::string& name = "");
+		GLTFCameraNode(size_t index, const GLTFCamera* pCamera, const std::string& name = std::string{});
 		virtual ~GLTFCameraNode() { }
 
 		virtual json toJSON() const;
@@ -89,7 +91,7 @@ namespace flow
 		friend class GLTFAsset;
 
 	protected:
-		GLTFSkinNode(size_t index, const GLTFSkin* pSkin, const std::string& name = "");
+		GLTFSkinNode(size_t index, const GLTFSkin* pSkin, const std::string& name = std::string{});
 		virtual ~GLTFSkinNode() { }
 
 		virtual json toJSON() const;

@@ -6,20 +6,36 @@
 */
 
 #include "GLTFTexture.h"
+#include "GLTFImage.h"
+#include "GLTFSampler.h"
 
 using namespace flow;
+using std::string;
 
 
-GLTFTexture::GLTFTexture(size_t index) :
-	GLTFElement(index)
+GLTFTexture::GLTFTexture(size_t index, const string& name /* = std::string{} */) :
+	GLTFElement(index, name),
+	_pImage(nullptr),
+	_pSampler(nullptr)
 {
 }
 
-GLTFTexture::~GLTFTexture()
+void GLTFTexture::setSource(const GLTFImage* pImage, const GLTFSampler* pSampler /* = nullptr */)
 {
+	_pImage = pImage;
+	_pSampler = pSampler;
 }
 
 json GLTFTexture::toJSON() const
 {
-	return json({});
+	json result = GLTFElement::toJSON();
+
+	if (_pImage) {
+		result["source"] = _pImage->index();
+	}
+	if (_pSampler) {
+		result["sampler"] = _pSampler->index();
+	}
+
+	return result;
 }

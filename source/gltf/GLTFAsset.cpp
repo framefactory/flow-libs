@@ -23,10 +23,14 @@
 #include "GLTFAsset.h"
 
 using namespace flow;
+using std::string;
+using std::vector;
+using std::exception;
 
 
 GLTFAsset::GLTFAsset() :
-	_version(Version::GLTF_2_0),
+	GLTFElement(0, string{}),
+	_version(GLTFVersion::GLTF_2_0),
 	_pMainScene(nullptr)
 {
 }
@@ -53,108 +57,154 @@ void GLTFAsset::setMainScene(const GLTFScene* pScene)
 	_pMainScene = pScene;
 }
 
-void GLTFAsset::setVersion(Version version)
+void GLTFAsset::setVersion(GLTFVersion version)
 {
 	_version = version;
 }
 
-void GLTFAsset::setGenerator(const std::string& generator)
+void GLTFAsset::setGenerator(const string& generator)
 {
 	_generator = generator;
 }
 
-void GLTFAsset::setCopyright(const std::string& copyright)
+void GLTFAsset::setCopyright(const string& copyright)
 {
 	_copyright = copyright;
 }
 
-GLTFScene* GLTFAsset::createScene(const std::string& name /* = "" */)
+GLTFScene* GLTFAsset::createScene(const string& name /* = string{} */)
 {
 	auto pScene = new GLTFScene(_scenes.size(), name);
 	_scenes.push_back(pScene);
 	return pScene;
 }
 
-GLTFNode* GLTFAsset::createNode(const std::string& name /* = "" */)
+GLTFNode* GLTFAsset::createNode(const string& name /* = string{} */)
 {
 	auto pNode = new GLTFNode(_nodes.size(), name);
 	_nodes.push_back(pNode);
 	return pNode;
 }
 
-GLTFMeshNode* GLTFAsset::createMeshNode(const GLTFMesh* pMesh, const std::string& name /* = "" */)
+GLTFMeshNode* GLTFAsset::createMeshNode(const GLTFMesh* pMesh, const string& name /* = string{} */)
 {
 	auto pNode = new GLTFMeshNode(_nodes.size(), pMesh, name);
 	_nodes.push_back(pNode);
 	return pNode;
 }
 
-GLTFSkinNode* GLTFAsset::createSkinNode(const GLTFSkin* pSkin, const std::string& name /* = "" */)
+GLTFSkinNode* GLTFAsset::createSkinNode(const GLTFSkin* pSkin, const string& name /* = string{} */)
 {
 	auto pNode = new GLTFSkinNode(_nodes.size(), pSkin, name);
 	_nodes.push_back(pNode);
 	return pNode;
 }
 
-GLTFCameraNode* GLTFAsset::createCameraNode(const GLTFCamera* pCamera, const std::string& name /* = "" */)
+GLTFCameraNode* GLTFAsset::createCameraNode(const GLTFCamera* pCamera, const string& name /* = string{} */)
 {
 	auto pNode = new GLTFCameraNode(_nodes.size(), pCamera, name);
 	_nodes.push_back(pNode);
 	return pNode;
 }
 
-GLTFCamera* GLTFAsset::createCamera()
+GLTFMesh* GLTFAsset::createMesh(const string& name /* = string{} */)
 {
-	auto pCamera = new GLTFCamera(_cameras.size());
-	_cameras.push_back(pCamera);
-	return pCamera;
-}
-
-GLTFMesh* GLTFAsset::createMesh()
-{
-	auto pMesh = new GLTFMesh(_meshes.size());
+	auto pMesh = new GLTFMesh(_meshes.size(), name);
 	_meshes.push_back(pMesh);
 	return pMesh;
 }
 
-GLTFBuffer* GLTFAsset::createBuffer(size_t byteLength)
+GLTFSkin* GLTFAsset::createSkin(const string& name /* = string{} */)
 {
-	auto pBuffer = new GLTFBuffer(_buffers.size(), byteLength);
+	auto pSkin = new GLTFSkin(_skins.size(), name);
+	_skins.push_back(pSkin);
+	return pSkin;
+}
+
+GLTFCamera* GLTFAsset::createCamera(const string& name /* = string{} */)
+{
+	auto pCamera = new GLTFCamera(_cameras.size(), name);
+	_cameras.push_back(pCamera);
+	return pCamera;
+}
+
+GLTFBuffer* GLTFAsset::createBuffer(size_t byteLength, const string& name /* = string{} */)
+{
+	auto pBuffer = new GLTFBuffer(_buffers.size(), name);
+	pBuffer->setByteLength(byteLength);
 	_buffers.push_back(pBuffer);
 	return pBuffer;
 }
 
-GLTFBufferView* GLTFAsset::createBufferView(const GLTFBuffer* pBuffer)
+GLTFBufferView* GLTFAsset::createBufferView(const GLTFBuffer* pBuffer, const string& name /* = string{} */)
 {
-	auto pBufferView = new GLTFBufferView(_bufferViews.size(), pBuffer);
+	auto pBufferView = new GLTFBufferView(_bufferViews.size(), name);
+	pBufferView->setBuffer(pBuffer);
 	_bufferViews.push_back(pBufferView);
 	return pBufferView;
 }
 
-GLTFAccessor* GLTFAsset::createAccessor(const GLTFBufferView* pView)
+GLTFAccessor* GLTFAsset::createAccessor(const GLTFBufferView* pView, const string& name /* = string{} */)
 {
-	auto pAccessor = new GLTFAccessor(_accessors.size(), pView);
+	auto pAccessor = new GLTFAccessor(_accessors.size(), name);
+	pAccessor->setBufferView(pView);
 	_accessors.push_back(pAccessor);
 	return pAccessor;
 }
 
-GLTFMaterial* GLTFAsset::createMaterial()
+GLTFMaterial* GLTFAsset::createMaterial(const string& name /* = string{} */)
 {
 	auto pMaterial = new GLTFMaterial(_materials.size());
 	_materials.push_back(pMaterial);
 	return pMaterial;
 }
 
-GLTFTexture* GLTFAsset::createTexture()
+GLTFTexture* GLTFAsset::createTexture(const GLTFImage* pImage, const GLTFSampler* pSampler /* = nullptr */)
 {
 	auto pTexture = new GLTFTexture(_textures.size());
+	pTexture->setSource(pImage, pSampler);
 	_textures.push_back(pTexture);
 	return pTexture;
 }
 
-GLTFImage* GLTFAsset::createImage()
+GLTFTexture* GLTFAsset::createTexture(const std::string& imageUri, const GLTFSampler* pSampler /* = nullptr */)
 {
 	auto pImage = new GLTFImage(_images.size());
+	pImage->setUri(imageUri);
+	_images.push_back(pImage);
+
+	auto pTexture = new GLTFTexture(_textures.size());
+	pTexture->setSource(pImage, pSampler);
+	_textures.push_back(pTexture);
+
+	return pTexture;
+}
+
+GLTFTexture* GLTFAsset::createTexture(const GLTFBufferView* pBufferView, GLTFMimeType mimeType, const GLTFSampler* pSampler /* = nullptr */)
+{
+	auto pImage = new GLTFImage(_images.size());
+	pImage->setBufferView(pBufferView, mimeType);
+	_images.push_back(pImage);
+
+	auto pTexture = new GLTFTexture(_textures.size());
+	pTexture->setSource(pImage, pSampler);
+	_textures.push_back(pTexture);
+
+	return pTexture;
+}
+
+GLTFImage* GLTFAsset::createImage(const std::string& imageUri)
+{
+	auto pImage = new GLTFImage(_images.size());
+	pImage->setUri(imageUri);
+	_images.push_back(pImage);
+	return pImage;
+}
+
+GLTFImage* GLTFAsset::createImage(const GLTFBufferView* pBufferView, GLTFMimeType mimeType)
+{
+	auto pImage = new GLTFImage(_images.size());
+	pImage->setBufferView(pBufferView, mimeType);
 	_images.push_back(pImage);
 	return pImage;
 }
@@ -166,16 +216,10 @@ GLTFSampler* GLTFAsset::createSampler()
 	return pSampler;
 }
 
-GLTFSkin* GLTFAsset::createSkin()
-{
-	// TODO: Implement
-	throw std::exception("not implemented yet");
-}
-
 GLTFAnimation* GLTFAsset::createAnimation()
 {
 	// TODO: Implement
-	throw std::exception("not implemented yet");
+	throw exception("not implemented yet");
 }
 
 json GLTFAsset::toJSON() const
@@ -224,7 +268,7 @@ std::string GLTFAsset::toString(int indent /* = -1 */) const
 }
 
 template<typename T>
-void GLTFAsset::_insertElements(json& jsonObj, const std::string& propName, const std::vector<T*>& vector) const
+void GLTFAsset::_insertElements(json& jsonObj, const string& propName, const vector<T*>& vector) const
 {
 	if (vector.empty()) {
 		return;
@@ -239,7 +283,7 @@ void GLTFAsset::_insertElements(json& jsonObj, const std::string& propName, cons
 }
 
 template<typename T>
-void GLTFAsset::_deleteVectorOfPointers(std::vector<T*>& vector)
+void GLTFAsset::_deleteVectorOfPointers(vector<T*>& vector)
 {
 	for (auto it = vector.begin(); it != vector.end(); ++it) {
 		delete *it;
@@ -249,7 +293,7 @@ void GLTFAsset::_deleteVectorOfPointers(std::vector<T*>& vector)
 const char* GLTFAsset::_versionToString() const
 {
 	switch (_version) {
-	case Version::GLTF_1_0: return "1.0";
-	case Version::GLTF_2_0: default: return "2.0";
+	case GLTFVersion::GLTF_1_0: return "1.0";
+	case GLTFVersion::GLTF_2_0: default: return "2.0";
 	}
 }

@@ -10,6 +10,9 @@
 
 #include "library.h"
 
+#include "GLTFElement.h"
+#include "GLTFImage.h"
+
 #include "../core/json.h"
 
 #include <vector>
@@ -36,14 +39,15 @@ namespace flow
 	class GLTFSkin;
 	class GLTFAnimation;
 
-	class F_GLTF_EXPORT GLTFAsset
+	enum class GLTFVersion
+	{
+		GLTF_1_0,
+		GLTF_2_0
+	};
+
+	class F_GLTF_EXPORT GLTFAsset : public GLTFElement
 	{
 	public:
-		enum Version {
-			GLTF_1_0,
-			GLTF_2_0
-		};
-
 		// Types
 		typedef std::vector<GLTFScene*> sceneVec_t;
 		typedef std::vector<GLTFNode*> nodeVec_t;
@@ -66,28 +70,34 @@ namespace flow
 		virtual ~GLTFAsset();
 
 		void setMainScene(const GLTFScene* pScene);
-		void setVersion(Version version);
+		void setVersion(GLTFVersion version);
 		void setGenerator(const std::string& generator);
 		void setCopyright(const std::string& copyright);
 
-		GLTFScene* createScene(const std::string& name = "");
+		GLTFScene* createScene(const std::string& name = std::string{});
 
 		GLTFNode* createNode(const std::string& name = "");
-		GLTFMeshNode* createMeshNode(const GLTFMesh* pMesh, const std::string& name = "");
-		GLTFSkinNode* createSkinNode(const GLTFSkin* pSkin, const std::string& name = "");
-		GLTFCameraNode* createCameraNode(const GLTFCamera* pCamera, const std::string& name = "");
+		GLTFMeshNode* createMeshNode(const GLTFMesh* pMesh, const std::string& name = std::string{});
+		GLTFSkinNode* createSkinNode(const GLTFSkin* pSkin, const std::string& name = std::string{});
+		GLTFCameraNode* createCameraNode(const GLTFCamera* pCamera, const std::string& name = std::string{});
 
-		GLTFMesh* createMesh();
-		GLTFSkin* createSkin();
-		GLTFCamera* createCamera();
+		GLTFMesh* createMesh(const std::string& name = std::string{});
+		GLTFSkin* createSkin(const std::string& name = std::string{});
+		GLTFCamera* createCamera(const std::string& name = std::string{});
 
-		GLTFBuffer* createBuffer(size_t byteLength);
-		GLTFBufferView* createBufferView(const GLTFBuffer* pBuffer);
-		GLTFAccessor* createAccessor(const GLTFBufferView* pView);
+		GLTFBuffer* createBuffer(size_t byteLength, const std::string& name = std::string{});
+		GLTFBufferView* createBufferView(const GLTFBuffer* pBuffer, const std::string& name = std::string{});
+		GLTFAccessor* createAccessor(const GLTFBufferView* pView, const std::string& name = std::string{});
 
-		GLTFMaterial* createMaterial();
-		GLTFTexture* createTexture();
-		GLTFImage* createImage();
+		GLTFMaterial* createMaterial(const std::string& name = std::string{});
+
+		GLTFTexture* createTexture(const GLTFImage* pImage, const GLTFSampler* pSampler = nullptr);
+		GLTFTexture* createTexture(const std::string& imageUri, const GLTFSampler* pSampler = nullptr);
+		GLTFTexture* createTexture(const GLTFBufferView* pBufferView, GLTFMimeType mimeType, const GLTFSampler* pSampler = nullptr);
+
+		GLTFImage* createImage(const std::string& imageUri);
+		GLTFImage* createImage(const GLTFBufferView* pBufferView, GLTFMimeType mimeType);
+
 		GLTFSampler* createSampler();
 
 		GLTFAnimation* createAnimation();
@@ -104,7 +114,7 @@ namespace flow
 
 		const char* _versionToString() const;
 
-		Version _version;
+		GLTFVersion _version;
 		std::string _generator;
 		std::string _copyright;
 

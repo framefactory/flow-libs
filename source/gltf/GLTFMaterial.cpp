@@ -8,18 +8,16 @@
 #include "GLTFMaterial.h"
 
 using namespace flow;
+using std::string;
 
 
-GLTFMaterial::GLTFMaterial(size_t index) :
-	GLTFElement(index)
-{
-}
-
-GLTFMaterial::~GLTFMaterial()
+GLTFMaterial::GLTFMaterial(size_t index, const string& name /* = string{} */) :
+	GLTFElement(index, name)
 {
 }
 
 json GLTFMaterial::toJSON() const
 {
-	return json({});
+	json result = GLTFElement::toJSON();
+	return result;
 }

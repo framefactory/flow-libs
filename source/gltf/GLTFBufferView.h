@@ -9,10 +9,18 @@
 #define _FLOWLIBS_GLTF_BUFFERVIEW_H
 
 #include "GLTFElement.h"
+#include <string>
 
 
 namespace flow
 {
+	enum class GLTFBufferTarget
+	{
+		UNDEFINED = 0x0000,
+		ARRAY_BUFFER = 0x8892,
+		ELEMENT_ARRAY_BUFFER = 0x8893
+	};
+
 	class GLTFBuffer;
 
 	class GLTFBufferView : public GLTFElement
@@ -20,20 +28,19 @@ namespace flow
 		friend class GLTFAsset;
 		friend class GLTFAccessor;
 
-	public:
-		enum Target {
-			UNDEFINED            = 0x0000,
-			ARRAY_BUFFER         = 0x8892,
-			ELEMENT_ARRAY_BUFFER = 0x8893
-		};
-
 	protected:
-		GLTFBufferView(size_t index, const GLTFBuffer* pBuffer);
+		GLTFBufferView(size_t index, const std::string& name = std::string{});
 		virtual ~GLTFBufferView() { }
 
 	public:
-		void setView(size_t byteOffset, size_t byteLength);
-		void setTarget(Target target);
+		void setBuffer(const GLTFBuffer* pBuffer);
+		void setView(size_t byteOffset, size_t byteLength, size_t byteStride = 0);
+		void setTarget(GLTFBufferTarget target);
+
+		const GLTFBuffer* buffer() const { return _pBuffer; }
+		size_t byteOffset() const { return _byteOffset; }
+		size_t byteLength() const { return _byteLength; }
+		GLTFBufferTarget target() const { return _target; }
 
 		virtual json toJSON() const;
 
@@ -41,7 +48,8 @@ namespace flow
 		const GLTFBuffer* _pBuffer;
 		size_t _byteOffset;
 		size_t _byteLength;
-		Target _target;
+		size_t _byteStride;
+		GLTFBufferTarget _target;
 	};
 }
 

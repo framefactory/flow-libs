@@ -23,19 +23,19 @@ namespace flow
 		friend class GLTFAsset;
 
 	protected:
-		GLTFScene(size_t index, const std::string& name = "");
+		GLTFScene(size_t index, const std::string& name = std::string{});
 		virtual ~GLTFScene();
 
 	public:
-		void setName(const std::string& name);
+		typedef std::vector<const GLTFNode*> nodeVec_t;
+
 		void addNode(const GLTFNode* pNode);
+
+		const nodeVec_t& nodes() const { return _nodes; }
 
 		virtual json toJSON() const;
 
 	private:
-		std::string _name;
-
-		typedef std::vector<const GLTFNode*> nodeVec_t;
 		nodeVec_t _nodes;
 	};
 }

@@ -18,8 +18,8 @@ namespace flow
 		friend class GLTFAsset;
 
 	protected:
-		GLTFMaterial(size_t index);
-		virtual ~GLTFMaterial();
+		GLTFMaterial(size_t index, const std::string& name = std::string{});
+		virtual ~GLTFMaterial() { }
 
 	public:
 		virtual json toJSON() const;

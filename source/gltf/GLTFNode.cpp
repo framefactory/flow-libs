@@ -11,11 +11,11 @@
 #include "GLTFNode.h"
 
 using namespace flow;
+using std::string;
 
 
-GLTFNode::GLTFNode(size_t index, const std::string& name /* = "" */) :
-	GLTFElement(index),
-	_name(name),
+GLTFNode::GLTFNode(size_t index, const string& name /* = string{} */) :
+	GLTFElement(index, name),
 	_pMatrix(nullptr),
 	_pTranslation(nullptr),
 	_pRotation(nullptr),
@@ -29,11 +29,6 @@ GLTFNode::~GLTFNode()
 	F_SAFE_DELETE(_pTranslation);
 	F_SAFE_DELETE(_pRotation);
 	F_SAFE_DELETE(_pScale);
-}
-
-void GLTFNode::setName(const std::string& name)
-{
-	_name = name;
 }
 
 void GLTFNode::addChild(const GLTFNode* pNode)
@@ -89,11 +84,8 @@ void GLTFNode::setTRS(const Vector3f& translation, const Quaternion4f& rotation,
 
 json GLTFNode::toJSON() const
 {
-	auto result = json::object();
+	json result = GLTFElement::toJSON();
 	
-	if (!_name.empty()) {
-		result["name"] = _name;
-	}
 	if (!_children.empty()) {
 		auto nodeArray = json::array();
 		for (auto it = _children.begin(); it != _children.end(); ++it) {
@@ -121,7 +113,7 @@ json GLTFNode::toJSON() const
 	return result;
 }
 
-GLTFMeshNode::GLTFMeshNode(size_t index, const GLTFMesh* pMesh, const std::string& name /* = "" */) :
+GLTFMeshNode::GLTFMeshNode(size_t index, const GLTFMesh* pMesh, const string& name /* = string{} */) :
 	GLTFNode(index, name),
 	_pMesh(pMesh)
 {
@@ -129,12 +121,12 @@ GLTFMeshNode::GLTFMeshNode(size_t index, const GLTFMesh* pMesh, const std::strin
 
 json GLTFMeshNode::toJSON() const
 {
-	auto result = GLTFNode::toJSON();
+	json result = GLTFNode::toJSON();
 	result["mesh"] = _pMesh->index();
 	return result;
 }
 
-GLTFCameraNode::GLTFCameraNode(size_t index, const GLTFCamera* pCamera, const std::string& name /* = "" */) :
+GLTFCameraNode::GLTFCameraNode(size_t index, const GLTFCamera* pCamera, const string& name /* = string{} */) :
 	GLTFNode(index, name),
 	_pCamera(pCamera)
 {
@@ -142,12 +134,12 @@ GLTFCameraNode::GLTFCameraNode(size_t index, const GLTFCamera* pCamera, const st
 
 json GLTFCameraNode::toJSON() const
 {
-	auto result = GLTFNode::toJSON();
+	json result = GLTFNode::toJSON();
 	result["camera"] = _pCamera->index();
 	return result;
 }
 
-GLTFSkinNode::GLTFSkinNode(size_t index, const GLTFSkin* pSkin, const std::string& name /* = "" */) :
+GLTFSkinNode::GLTFSkinNode(size_t index, const GLTFSkin* pSkin, const string& name /* = string{} */) :
 	GLTFNode(index, name),
 	_pSkin(pSkin)
 {
@@ -155,7 +147,7 @@ GLTFSkinNode::GLTFSkinNode(size_t index, const GLTFSkin* pSkin, const std::strin
 
 json GLTFSkinNode::toJSON() const
 {
-	auto result = GLTFNode::toJSON();
+	json result = GLTFNode::toJSON();
 	result["skin"] = _pSkin->index();
 	return result;
 }

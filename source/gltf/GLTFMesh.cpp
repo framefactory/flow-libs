@@ -10,21 +10,19 @@
 #include "GLTFMesh.h"
 
 using namespace flow;
+using std::string;
+using std::vector;
 
 
-GLTFPrimitive::GLTFPrimitive(size_t index, Mode mode, const GLTFMaterial* pMaterial /* = nullptr */) :
-	GLTFElement(index),
-	_mode(mode),
-	_pMaterial(pMaterial),
+GLTFPrimitive::GLTFPrimitive(size_t index) :
+	GLTFElement(index, std::string{}),
+	_mode(GLTFPrimitiveMode::TRIANGLES),
+	_pMaterial(nullptr),
 	_pIndicesAccessor(nullptr)
 {
 }
 
-GLTFPrimitive::~GLTFPrimitive()
-{
-}
-
-void GLTFPrimitive::setMode(Mode mode)
+void GLTFPrimitive::setMode(GLTFPrimitiveMode mode)
 {
 	_mode = mode;
 }
@@ -39,12 +37,12 @@ void GLTFPrimitive::setIndices(const GLTFAccessor* pAccessor)
 	_pIndicesAccessor = pAccessor;
 }
 
-void GLTFPrimitive::addAttribute(GLTFAttribute::Type type, const GLTFAccessor* pAccessor)
+void GLTFPrimitive::addAttribute(GLTFAttributeType type, const GLTFAccessor* pAccessor)
 {
 	_attributes.push_back({ type, pAccessor });
 }
 
-void GLTFPrimitive::addTargetAttribute(size_t index, GLTFAttribute::Type type, const GLTFAccessor* pAccessor)
+void GLTFPrimitive::addTargetAttribute(size_t index, GLTFAttributeType type, const GLTFAccessor* pAccessor)
 {
 	if (index >= _targets.size()) {
 		_targets.resize(index + 1);
@@ -55,35 +53,34 @@ void GLTFPrimitive::addTargetAttribute(size_t index, GLTFAttribute::Type type, c
 
 void GLTFPrimitive::addPositions(const GLTFAccessor* pAccessor)
 {
-	_attributes.push_back({ GLTFAttribute::Type::POSITION, pAccessor });
+	_attributes.push_back({ GLTFAttributeType::POSITION, pAccessor });
 }
 
 void GLTFPrimitive::addNormals(const GLTFAccessor* pAccessor)
 {
-	_attributes.push_back({ GLTFAttribute::Type::NORMAL, pAccessor });
+	_attributes.push_back({ GLTFAttributeType::NORMAL, pAccessor });
 }
 
 void GLTFPrimitive::addTexCoords(const GLTFAccessor* pAccessor)
 {
-	_attributes.push_back({ GLTFAttribute::Type::TEXCOORD_0, pAccessor });
+	_attributes.push_back({ GLTFAttributeType::TEXCOORD_0, pAccessor });
 }
 
 json GLTFPrimitive::toJSON() const
 {
-	auto attribDict = json();
+	json attribDict;
 	for (auto it = _attributes.begin(); it != _attributes.end(); ++it) {
 		attribDict[_attribName(it->type)] = it->pAccessor->index();
 	}
 
-	auto result = json({
-		{ "attributes", attribDict },
-		{ "mode", (size_t)_mode }
-	});
+	json result = GLTFElement::toJSON();
+
+	result["attributes"] = attribDict;
+	result["mode"] = (int)_mode;
 
 	if (_pIndicesAccessor) {
 		result["indices"] = _pIndicesAccessor->index();
 	}
-
 	if (_pMaterial) {
 		result["material"] = _pMaterial->index();
 	}
@@ -104,24 +101,24 @@ json GLTFPrimitive::toJSON() const
 	return result;
 }
 
-const char* GLTFPrimitive::_attribName(GLTFAttribute::Type type) const
+const char* GLTFPrimitive::_attribName(GLTFAttributeType type) const
 {
 	switch (type) {
-	case GLTFAttribute::Type::POSITION: return "POSITION";
-	case GLTFAttribute::Type::NORMAL: return "NORMAL";
-	case GLTFAttribute::Type::TANGENT: return "TANGENT";
-	case GLTFAttribute::Type::TEXCOORD_0: return "TEXCOORD_0";
-	case GLTFAttribute::Type::TEXCOORD_1: return "TEXCOORD_1";
-	case GLTFAttribute::Type::COLOR_0: return "COLOR_0";
-	case GLTFAttribute::Type::JOINTS_0: return "JOINTS_0";
-	case GLTFAttribute::Type::WEIGHTS_0: return "WEIGHTS_0";
+	case GLTFAttributeType::POSITION: return "POSITION";
+	case GLTFAttributeType::NORMAL: return "NORMAL";
+	case GLTFAttributeType::TANGENT: return "TANGENT";
+	case GLTFAttributeType::TEXCOORD_0: return "TEXCOORD_0";
+	case GLTFAttributeType::TEXCOORD_1: return "TEXCOORD_1";
+	case GLTFAttributeType::COLOR_0: return "COLOR_0";
+	case GLTFAttributeType::JOINTS_0: return "JOINTS_0";
+	case GLTFAttributeType::WEIGHTS_0: return "WEIGHTS_0";
 	default: return "POSITION";
 	}
 }
 
 
-GLTFMesh::GLTFMesh(size_t index) :
-	GLTFElement(index)
+GLTFMesh::GLTFMesh(size_t index, const string& name /* = string{} */) :
+	GLTFElement(index, name)
 {
 }
 
@@ -132,9 +129,11 @@ GLTFMesh::~GLTFMesh()
 	}
 }
 
-GLTFPrimitive* GLTFMesh::createPrimitive(GLTFPrimitive::Mode mode, const GLTFMaterial* pMaterial /* = nullptr */)
+GLTFPrimitive* GLTFMesh::createPrimitive(GLTFPrimitiveMode mode, const GLTFMaterial* pMaterial /* = nullptr */)
 {
-	GLTFPrimitive* pPrimitive = new GLTFPrimitive(_primitives.size(), mode, pMaterial);
+	GLTFPrimitive* pPrimitive = new GLTFPrimitive(_primitives.size());
+	pPrimitive->setMode(mode);
+	pPrimitive->setMaterial(pMaterial);
 	_primitives.push_back(pPrimitive);
 	return pPrimitive;
 }
@@ -146,14 +145,14 @@ void GLTFMesh::addWeight(float weight)
 
 json GLTFMesh::toJSON() const
 {
-	auto primArr = json::array();
+	json primArr = json::array();
 	for (auto it = _primitives.begin(); it != _primitives.end(); ++it) {
 		primArr.push_back((*it)->toJSON());
 	}
 
-	auto result = json({
-		{ "primitives", primArr }
-	});
+	json result = GLTFElement::toJSON();
+
+	result["primitives"] = primArr;
 
 	if (!_weights.empty()) {
 		result["weights"] = _weights;

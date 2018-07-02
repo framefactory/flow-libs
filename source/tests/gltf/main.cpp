@@ -24,10 +24,10 @@ int main(int argc, char** ppArgv)
 	auto pBuffer = asset.createBuffer(65536);
 	auto pBufferView = asset.createBufferView(pBuffer);
 	auto pPositionAccessor = asset.createAccessor(pBufferView);
-	pPositionAccessor->setType(GLTFAccessor::Type::VEC3, GLTFAccessor::ComponentType::FLOAT);
+	pPositionAccessor->setType(GLTFAccessorType::VEC3, GLTFAccessorComponent::FLOAT);
 
 	auto pMesh = asset.createMesh();
-	auto pPrim = pMesh->createPrimitive(GLTFPrimitive::TRIANGLES);
+	auto pPrim = pMesh->createPrimitive(GLTFPrimitiveMode::TRIANGLES);
 	pPrim->addPositions(pPositionAccessor);
 
 	auto pMeshNode = asset.createMeshNode(pMesh, "My Mesh");

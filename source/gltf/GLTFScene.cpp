@@ -9,21 +9,16 @@
 #include "GLTFScene.h"
 
 using namespace flow;
+using std::string;
 
 
-GLTFScene::GLTFScene(size_t index, const std::string& name /* = "" */) :
-	GLTFElement(index),
-	_name(name)
+GLTFScene::GLTFScene(size_t index, const string& name /* = string{} */) :
+	GLTFElement(index, name)
 {
 }
 
 GLTFScene::~GLTFScene()
 {
-}
-
-void GLTFScene::setName(const std::string& name)
-{
-	_name = name;
 }
 
 void GLTFScene::addNode(const GLTFNode* pNode)
@@ -33,11 +28,8 @@ void GLTFScene::addNode(const GLTFNode* pNode)
 
 json GLTFScene::toJSON() const
 {
-	auto result = json::object();
+	json result = GLTFElement::toJSON();
 
-	if (!_name.empty()) {
-		result["name"] = _name;
-	}
 	if (!_nodes.empty()) {
 		auto nodeArray = json::array();
 		for (auto it = _nodes.begin(); it != _nodes.end(); ++it) {

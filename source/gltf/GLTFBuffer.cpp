@@ -8,23 +8,34 @@
 #include "GLTFBuffer.h"
 
 using namespace flow;
+using std::string;
 
 
-GLTFBuffer::GLTFBuffer(size_t index, size_t byteLength) :
-	GLTFElement(index),
-	_byteLength(byteLength)
+GLTFBuffer::GLTFBuffer(size_t index, const string& name /* = string{} */) :
+	GLTFElement(index, name),
+	_byteLength(0)
 {
 }
 
-void GLTFBuffer::setUri(const std::string& uri)
+void GLTFBuffer::setByteLength(size_t byteLength)
+{
+	_byteLength = byteLength;
+}
+
+void GLTFBuffer::setUri(const string& uri)
 {
 	_uri = uri;
 }
 
 json GLTFBuffer::toJSON() const
 {
-	return json({
-		{ "byteLength", _byteLength },
-		{ "uri", _uri }
-	});
+	json result = GLTFElement::toJSON();
+
+	result["byteLength"] = _byteLength;
+
+	if (!_uri.empty()) {
+		result["uri"] = _uri;
+	}
+
+	return result;
 }

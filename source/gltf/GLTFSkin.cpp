@@ -8,18 +8,15 @@
 #include "GLTFSkin.h"
 
 using namespace flow;
+using std::string;
 
-
-GLTFSkin::GLTFSkin(size_t index) :
-	GLTFElement(index)
-{
-}
-
-GLTFSkin::~GLTFSkin()
+GLTFSkin::GLTFSkin(size_t index, const string& name /* = string{} */) :
+	GLTFElement(index, name)
 {
 }
 
 json GLTFSkin::toJSON() const
 {
-	return json({});
+	json result = GLTFElement::toJSON();
+	return result;
 }

@@ -9,7 +9,7 @@
 #define _FLOWLIBS_GLTF_SKIN_H
 
 #include "GLTFElement.h"
-
+#include <string>
 
 namespace flow
 {
@@ -18,8 +18,8 @@ namespace flow
 		friend class GLTFAsset;
 
 	protected:
-		GLTFSkin(size_t index);
-		virtual ~GLTFSkin();
+		GLTFSkin(size_t index, const std::string& name = std::string{});
+		virtual ~GLTFSkin() { }
 
 	public:
 		virtual json toJSON() const;
