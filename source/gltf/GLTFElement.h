@@ -9,8 +9,8 @@
 #define _FLOWLIBS_GLTF_ELEMENT_H
 
 #include "library.h"
-#include "../core/json.h"
 
+#include "../core/json.h"
 #include <string>
 
 
@@ -19,21 +19,19 @@ namespace flow
 	class GLTFElement
 	{
 	public:
-		GLTFElement(size_t index, const std::string& name);
-		virtual ~GLTFElement() { }
+		GLTFElement() {}
+		virtual ~GLTFElement() {}
+
+		void addExtension(std::string& prop, const json& jsonData);
+		void setExtras(const json& jsonData);
+
+		const json extensions() const { return _extensions; }
+		const json extras() const { return _extras; }
 
 		virtual json toJSON() const;
 		virtual std::string toString(int indent = -1) const;
 
-		void setName(const std::string& name);
-		void addExtension(std::string& prop, const json& jsonData);
-		void setExtras(const json& jsonData);
-
-		size_t index() const { return _index;  }
-
 	protected:
-		size_t _index;
-		std::string _name;
 		json _extensions;
 		json _extras;
 	};

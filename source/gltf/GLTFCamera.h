@@ -8,15 +8,17 @@
 #ifndef _FLOWLIBS_GLTF_CAMERA_H
 #define _FLOWLIBS_GLTF_CAMERA_H
 
-#include "GLTFElement.h"
+#include "library.h"
+#include "GLTFMainElement.h"
+
 #include <string>
 
 
 namespace flow
 {
-	class GLTFCamera : public GLTFElement
+	class GLTFCamera : public GLTFMainElement
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 
 	protected:
 		GLTFCamera(size_t index, const std::string& name);

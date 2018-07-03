@@ -8,7 +8,8 @@
 #ifndef _FLOWLIBS_GLTF_IMAGE_H
 #define _FLOWLIBS_GLTF_IMAGE_H
 
-#include "GLTFElement.h"
+#include "library.h"
+#include "GLTFMainElement.h"
 
 #include <string>
 
@@ -23,9 +24,9 @@ namespace flow
 		IMAGE_PNG
 	};
 
-	class GLTFImage : public GLTFElement
+	class GLTFImage : public GLTFMainElement
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 
 	protected:
 		GLTFImage(size_t index, const std::string& name = std::string{});

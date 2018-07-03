@@ -8,7 +8,10 @@
 #ifndef _FLOWLIBS_GLTF_TEXTURE_H
 #define _FLOWLIBS_GLTF_TEXTURE_H
 
-#include "GLTFElement.h"
+#include "library.h"
+#include "GLTFMainElement.h"
+
+#include <string>
 
 
 namespace flow
@@ -16,9 +19,9 @@ namespace flow
 	class GLTFImage;
 	class GLTFSampler;
 
-	class GLTFTexture : public GLTFElement
+	class GLTFTexture : public GLTFMainElement
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 
 	protected:
 		GLTFTexture(size_t index, const std::string& name = std::string{});

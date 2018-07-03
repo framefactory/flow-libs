@@ -12,7 +12,7 @@ using std::string;
 
 
 GLTFCamera::GLTFCamera(size_t index, const string& name) :
-	GLTFElement(index, name),
+	GLTFMainElement(index, name),
 	_zfar(1000.0f),
 	_znear(0.1f)
 {

@@ -13,7 +13,7 @@ using std::string;
 
 
 GLTFScene::GLTFScene(size_t index, const string& name /* = string{} */) :
-	GLTFElement(index, name)
+	GLTFMainElement(index, name)
 {
 }
 
@@ -28,7 +28,7 @@ void GLTFScene::addNode(const GLTFNode* pNode)
 
 json GLTFScene::toJSON() const
 {
-	json result = GLTFElement::toJSON();
+	json result = GLTFMainElement::toJSON();
 
 	if (!_nodes.empty()) {
 		auto nodeArray = json::array();

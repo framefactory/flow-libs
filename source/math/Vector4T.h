@@ -643,7 +643,7 @@ namespace flow
 	// Typedefs --------------------------------------------------------------------
 
 	/// 4-component vector of type float
-	typedef F_ALIGN(16) Vector4T<float> FVector4f;
+	typedef Vector4T<float> Vector4f;
 
 	/// 4-component vector of type double
 	typedef Vector4T<double> Vector4d;

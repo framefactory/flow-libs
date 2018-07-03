@@ -13,7 +13,7 @@ using std::string;
 
 
 GLTFBufferView::GLTFBufferView(size_t index, const string& name /* = std::string{} */) :
-	GLTFElement(index, name),
+	GLTFMainElement(index, name),
 	_pBuffer(nullptr),
 	_byteOffset(0),
 	_byteLength(0),
@@ -41,7 +41,7 @@ void GLTFBufferView::setTarget(GLTFBufferTarget target)
 
 json GLTFBufferView::toJSON() const
 {
-	json result = GLTFElement::toJSON();
+	json result = GLTFMainElement::toJSON();
 
 	if (!_pBuffer) {
 		throw std::exception("GLTFBufferView: buffer not set");

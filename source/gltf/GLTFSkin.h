@@ -8,14 +8,17 @@
 #ifndef _FLOWLIBS_GLTF_SKIN_H
 #define _FLOWLIBS_GLTF_SKIN_H
 
-#include "GLTFElement.h"
+#include "library.h"
+#include "GLTFMainElement.h"
+
 #include <string>
+
 
 namespace flow
 {
-	class GLTFSkin : public GLTFElement
+	class GLTFSkin : public GLTFMainElement
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 
 	protected:
 		GLTFSkin(size_t index, const std::string& name = std::string{});

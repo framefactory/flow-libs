@@ -8,7 +8,9 @@
 #ifndef _FLOWLIBS_GLTF_BUFFERVIEW_H
 #define _FLOWLIBS_GLTF_BUFFERVIEW_H
 
-#include "GLTFElement.h"
+#include "library.h"
+#include "GLTFMainElement.h"
+
 #include <string>
 
 
@@ -23,9 +25,9 @@ namespace flow
 
 	class GLTFBuffer;
 
-	class GLTFBufferView : public GLTFElement
+	class GLTFBufferView : public GLTFMainElement
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 		friend class GLTFAccessor;
 
 	protected:

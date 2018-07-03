@@ -15,7 +15,7 @@ using std::string;
 
 
 GLTFNode::GLTFNode(size_t index, const string& name /* = string{} */) :
-	GLTFElement(index, name),
+	GLTFMainElement(index, name),
 	_pMatrix(nullptr),
 	_pTranslation(nullptr),
 	_pRotation(nullptr),
@@ -84,7 +84,7 @@ void GLTFNode::setTRS(const Vector3f& translation, const Quaternion4f& rotation,
 
 json GLTFNode::toJSON() const
 {
-	json result = GLTFElement::toJSON();
+	json result = GLTFMainElement::toJSON();
 	
 	if (!_children.empty()) {
 		auto nodeArray = json::array();

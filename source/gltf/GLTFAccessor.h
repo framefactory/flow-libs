@@ -8,7 +8,8 @@
 #ifndef _FLOWLIBS_GLTF_ACCESSOR_H
 #define _FLOWLIBS_GLTF_ACCESSOR_H
  
-#include "GLTFElement.h"
+#include "library.h"
+#include "GLTFMainElement.h"
 
 #include <string>
 #include <vector>
@@ -40,9 +41,9 @@ namespace flow
 		FLOAT = 0x1406
 	};
 
-	class GLTFAccessor : public GLTFElement
+	class GLTFAccessor : public GLTFMainElement
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 
 	protected:
 		GLTFAccessor(size_t index, const std::string& name = std::string{});
@@ -52,16 +53,16 @@ namespace flow
 		void setBufferView(const GLTFBufferView* pBufferView);
 		void setType(GLTFAccessorType type, GLTFAccessorComponent component, bool normalized = false);
 		void setRange(size_t elementCount, size_t byteOffset, size_t byteStride = 0);
-		void setMin(const std::vector<float>& min);
-		void setMax(const std::vector<float>& max);
+		void setMin(const std::vector<double>& min);
+		void setMax(const std::vector<double>& max);
 
 		GLTFAccessorType type() const { return _type; }
 		GLTFAccessorComponent component() const { return _componentType; }
 		size_t count() const { return _count; }
 		size_t byteOffset() const { return _byteOffset; }
 		size_t byteStride() const { return _byteStride; }
-		const std::vector<float>& min() const { return _min; }
-		const std::vector<float>& max() const { return _max; }
+		const std::vector<double>& min() const { return _min; }
+		const std::vector<double>& max() const { return _max; }
 
 		virtual json toJSON() const;
 
@@ -77,8 +78,8 @@ namespace flow
 		size_t _count;
 		size_t _byteOffset;
 		size_t _byteStride;
-		std::vector<float> _min;
-		std::vector<float> _max;
+		std::vector<double> _min;
+		std::vector<double> _max;
 	};
 }
  

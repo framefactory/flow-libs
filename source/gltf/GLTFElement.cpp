@@ -11,18 +11,7 @@ using namespace flow;
 using std::string;
 
 
-GLTFElement::GLTFElement(size_t index, const string& name) :
-	_index(index),
-	_name(name)
-{
-}
-
-void GLTFElement::setName(const std::string& name)
-{
-	_name = name;
-}
-
-void GLTFElement::addExtension(std::string& prop, const json& jsonData)
+void GLTFElement::addExtension(string& prop, const json& jsonData)
 {
 	_extensions[prop] = jsonData;
 }
@@ -36,9 +25,6 @@ json GLTFElement::toJSON() const
 {
 	json result;
 
-	if (!_name.empty()) {
-		result["name"] = _name;
-	}
 	if (!_extensions.empty()) {
 		result["extensions"] = _extensions;
 	}

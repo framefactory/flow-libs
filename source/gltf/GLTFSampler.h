@@ -8,7 +8,10 @@
 #ifndef _FLOWLIBS_GLTF_SAMPLER_H
 #define _FLOWLIBS_GLTF_SAMPLER_H
 
-#include "GLTFElement.h"
+#include "library.h"
+#include "GLTFMainElement.h"
+
+#include <string>
 
 
 namespace flow
@@ -36,9 +39,9 @@ namespace flow
 		MIRRORED_REPEAT = 33648
 	};
 
-	class GLTFSampler : public GLTFElement
+	class GLTFSampler : public GLTFMainElement
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 
 	protected:
 		GLTFSampler(size_t index, const std::string& name = std::string{});

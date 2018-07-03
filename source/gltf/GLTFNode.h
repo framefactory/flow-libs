@@ -8,14 +8,15 @@
 #ifndef _FLOWLIBS_GLTF_NODE_H
 #define _FLOWLIBS_GLTF_NODE_H
 
-#include "GLTFElement.h"
+#include "library.h"
+#include "GLTFMainElement.h"
 
 #include "math/Vector3T.h"
 #include "math/QuaternionT.h"
 #include "math/Matrix4T.h"
 
-#include <vector>
 #include <string>
+#include <vector>
 
 
 namespace flow
@@ -24,9 +25,9 @@ namespace flow
 	class GLTFSkin;
 	class GLTFCamera;
 
-	class GLTFNode : public GLTFElement
+	class GLTFNode : public GLTFMainElement
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 
 	protected:
 		GLTFNode(size_t index, const std::string& name = std::string{});
@@ -60,7 +61,7 @@ namespace flow
 
 	class GLTFMeshNode : public GLTFNode
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 
 	protected:
 		GLTFMeshNode(size_t index, const GLTFMesh* pMesh, const std::string& name = std::string{});
@@ -74,7 +75,7 @@ namespace flow
 
 	class GLTFCameraNode : public GLTFNode
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 
 	protected:
 		GLTFCameraNode(size_t index, const GLTFCamera* pCamera, const std::string& name = std::string{});
@@ -88,7 +89,7 @@ namespace flow
 
 	class GLTFSkinNode : public GLTFNode
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 
 	protected:
 		GLTFSkinNode(size_t index, const GLTFSkin* pSkin, const std::string& name = std::string{});

@@ -12,7 +12,7 @@ using std::string;
 
 
 GLTFSampler::GLTFSampler(size_t index, const string& name /* = std::string{} */) :
-	GLTFElement(index, name),
+	GLTFMainElement(index, name),
 	_magFilter(GLTFMagFilter::LINEAR),
 	_minFilter(GLTFMinFilter::LINEAR),
 	_wrapS(GLTFWrapMode::REPEAT),
@@ -34,7 +34,7 @@ void GLTFSampler::setWrapMode(GLTFWrapMode wrapS, GLTFWrapMode wrapT)
 
 json GLTFSampler::toJSON() const
 {
-	json result = GLTFElement::toJSON();
+	json result = GLTFMainElement::toJSON();
 
 	result["magFilter"] = (int)_magFilter;
 	result["minFilter"] = (int)_minFilter;

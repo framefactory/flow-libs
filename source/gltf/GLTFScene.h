@@ -8,7 +8,8 @@
 #ifndef _FLOWLIBS_GLTF_SCENE_H
 #define _FLOWLIBS_GLTF_SCENE_H
 
-#include "GLTFElement.h"
+#include "library.h"
+#include "GLTFMainElement.h"
 
 #include <vector>
 #include <string>
@@ -18,9 +19,9 @@ namespace flow
 {
 	class GLTFNode;
 
-	class GLTFScene : public GLTFElement
+	class GLTFScene : public GLTFMainElement
 	{
-		friend class GLTFAsset;
+		friend class GLTFObject;
 
 	protected:
 		GLTFScene(size_t index, const std::string& name = std::string{});

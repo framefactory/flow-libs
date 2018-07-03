@@ -11,12 +11,12 @@ using namespace flow;
 using std::string;
 
 GLTFSkin::GLTFSkin(size_t index, const string& name /* = string{} */) :
-	GLTFElement(index, name)
+	GLTFMainElement(index, name)
 {
 }
 
 json GLTFSkin::toJSON() const
 {
-	json result = GLTFElement::toJSON();
+	json result = GLTFMainElement::toJSON();
 	return result;
 }

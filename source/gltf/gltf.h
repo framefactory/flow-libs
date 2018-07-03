@@ -8,11 +8,13 @@
 #ifndef _FLOWLIBS_GLTF_H
 #define _FLOWLIBS_GLTF_H
 
-#include "GLTFElement.h"
+#include "library.h"
+
 #include "GLTFScene.h"
 #include "GLTFNode.h"
 #include "GLTFCamera.h"
 #include "GLTFMesh.h"
+#include "GLTFPrimitive.h"
 #include "GLTFBuffer.h"
 #include "GLTFBufferView.h"
 #include "GLTFAccessor.h"

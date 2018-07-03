@@ -14,7 +14,7 @@ using std::string;
 
 
 GLTFTexture::GLTFTexture(size_t index, const string& name /* = std::string{} */) :
-	GLTFElement(index, name),
+	GLTFMainElement(index, name),
 	_pImage(nullptr),
 	_pSampler(nullptr)
 {
@@ -28,7 +28,7 @@ void GLTFTexture::setSource(const GLTFImage* pImage, const GLTFSampler* pSampler
 
 json GLTFTexture::toJSON() const
 {
-	json result = GLTFElement::toJSON();
+	json result = GLTFMainElement::toJSON();
 
 	if (_pImage) {
 		result["source"] = _pImage->index();

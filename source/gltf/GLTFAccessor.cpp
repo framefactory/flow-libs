@@ -14,7 +14,7 @@ using std::vector;
 
 
 GLTFAccessor::GLTFAccessor(size_t index, const string& name /* = std::string{} */) :
-	GLTFElement(index, name),
+	GLTFMainElement(index, name),
 	_pBufferView(nullptr),
 	_type(GLTFAccessorType::SCALAR),
 	_componentType(GLTFAccessorComponent::FLOAT),
@@ -48,19 +48,19 @@ void GLTFAccessor::setRange(size_t elementCount, size_t byteOffset, size_t byteS
 	_byteStride = _byteStride;
 }
 
-void GLTFAccessor::setMin(const vector<float>& min)
+void GLTFAccessor::setMin(const vector<double>& min)
 {
 	_min = min;
 }
 
-void GLTFAccessor::setMax(const vector<float>& max)
+void GLTFAccessor::setMax(const vector<double>& max)
 {
 	_max = max;
 }
 
 json GLTFAccessor::toJSON() const
 {
-	json result = GLTFElement::toJSON();
+	json result = GLTFMainElement::toJSON();
 
 	result["type"] = _typeName(_type);
 	result["componentType"] = (int)_componentType;

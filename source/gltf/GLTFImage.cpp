@@ -13,7 +13,7 @@ using std::string;
 
 
 GLTFImage::GLTFImage(size_t index, const string& name /* = std::string{} */) :
-	GLTFElement(index, name),
+	GLTFMainElement(index, name),
 	_pBufferView(nullptr),
 	_mimeType(GLTFMimeType::IMAGE_JPEG)
 {
@@ -35,7 +35,7 @@ void GLTFImage::setBufferView(const GLTFBufferView* pBufferView, GLTFMimeType mi
 
 json GLTFImage::toJSON() const
 {
-	json result = GLTFElement::toJSON();
+	json result = GLTFMainElement::toJSON();
 
 	if (_pBufferView) {
 		result["bufferView"] = _pBufferView->index();
