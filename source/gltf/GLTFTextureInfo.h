@@ -25,7 +25,7 @@ namespace flow
 		void set(const GLTFTexture* pTexture, size_t texCoord = 0);
 
 		const GLTFTexture* texture() const { return _pTexture; }
-		int texCoord() const { return _texCoord; }
+		size_t texCoord() const { return _texCoord; }
 
 		virtual json toJSON() const;
 

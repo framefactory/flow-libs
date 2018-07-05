@@ -24,6 +24,7 @@
 #include "GLTFSampler.h"
 #include "GLTFSkin.h"
 #include "GLTFAsset.h"
+#include "GLTFObject.h"
 //#include "GLTFAnimation.h"
 
 #endif // _FLOWLIBS_GLTF_H

@@ -48,10 +48,11 @@ endif()
 include_directories(${PROJECT_SOURCE_DIR}/source)
 
 # Add library components
-#add_subdirectory(source/core)
+add_subdirectory(source/core)
+add_subdirectory(source/math)
 add_subdirectory(source/gltf)
 #add_subdirectory(source/graphics)
-#add_subdirectory(source/math)
 
 # Tests and test applications
 add_subdirectory(source/tests/gltf)
+add_subdirectory(source/tests/cpp)

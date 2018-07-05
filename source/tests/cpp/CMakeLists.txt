@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# Flow Libs - glTF Test App
+# Flow Libs - CPP Test App
 # ------------------------------------------------------------------------------
 
 # Automatically create a list of source files
@@ -14,29 +14,17 @@ set(AllFiles ${SourceFiles};${HeaderFiles})
 source_group("All Files" FILES ${AllFiles})
 
 # ------------------------------------------------------------------------------
-# 3RD PARTY LIBRARIES
-
-find_package(Qt5 COMPONENTS Core REQUIRED)
-#find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
-
-# ------------------------------------------------------------------------------
 # BUILD TARGET
 
-add_executable(glTFTest ${AllFiles})
-set_target_properties(glTFTest PROPERTIES DEBUG_POSTFIX "d")
-set_property(TARGET glTFTest PROPERTY FOLDER "_apps")
+add_executable(CPPTest ${AllFiles})
+set_target_properties(CPPTest PROPERTIES DEBUG_POSTFIX "d")
+set_property(TARGET CPPTest PROPERTY FOLDER "_apps")
 
-target_include_directories(glTFTest BEFORE PRIVATE
+target_include_directories(CPPTest BEFORE PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/source
-	Qt5::Core
-#	Qt5::Gui
-#	Qt5::Widgets
 )
 
-target_link_libraries(glTFTest
-    Qt5::Core
-#    Qt5::Gui
-#    Qt5::Widgets
+target_link_libraries(CPPTest
     FlowCore
     FlowGLTF
 )
