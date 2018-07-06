@@ -22,7 +22,7 @@ namespace flow
 	class GLTFPrimitive;
 	
 
-	class GLTFMesh : public GLTFMainElement
+	class F_GLTF_EXPORT GLTFMesh : public GLTFMainElement
 	{
 		friend class GLTFObject;
 

@@ -16,7 +16,7 @@ namespace flow
 {
 	class GLTFTexture;
 
-	class GLTFTextureInfo : public GLTFElement
+	class F_GLTF_EXPORT GLTFTextureInfo : public GLTFElement
 	{
 	public:
 		GLTFTextureInfo(const GLTFTexture* pTexture = nullptr, size_t texCoord = 0);
@@ -34,7 +34,7 @@ namespace flow
 		size_t _texCoord;
 	};
 
-	class GLTFNormalTextureInfo : public GLTFTextureInfo
+	class F_GLTF_EXPORT GLTFNormalTextureInfo : public GLTFTextureInfo
 	{
 	public:
 		GLTFNormalTextureInfo(const GLTFTexture* pTexture = nullptr, size_t texCoord = 0, float scale = 1.0f);
@@ -49,7 +49,7 @@ namespace flow
 		float _scale;
 	};
 
-	class GLTFOcclusionTextureInfo : public GLTFTextureInfo
+	class F_GLTF_EXPORT GLTFOcclusionTextureInfo : public GLTFTextureInfo
 	{
 	public:
 		GLTFOcclusionTextureInfo(GLTFTexture* pTexture = nullptr, size_t texCoord = 0, float strength = 1.0f);

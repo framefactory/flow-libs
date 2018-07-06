@@ -19,7 +19,7 @@ namespace flow
 	class GLTFImage;
 	class GLTFSampler;
 
-	class GLTFTexture : public GLTFMainElement
+	class F_GLTF_EXPORT GLTFTexture : public GLTFMainElement
 	{
 		friend class GLTFObject;
 

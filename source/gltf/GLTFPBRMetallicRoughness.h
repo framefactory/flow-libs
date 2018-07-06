@@ -19,7 +19,7 @@ namespace flow
 {
 	class GLTFTexture;
 
-	class GLTFPBRMetallicRoughness : public GLTFElement
+	class F_GLTF_EXPORT GLTFPBRMetallicRoughness : public GLTFElement
 	{
 	public:
 		GLTFPBRMetallicRoughness();

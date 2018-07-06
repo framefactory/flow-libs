@@ -10,6 +10,7 @@
 
 #include "library.h"
 #include "GLTFElement.h"
+#include "GLTFConstants.h"
 
 #include <string>
 #include <vector>
@@ -20,36 +21,13 @@ namespace flow
 	class GLTFMaterial;
 	class GLTFAccessor;
 
-	enum class GLTFAttributeType
-	{
-		POSITION,
-		NORMAL,
-		TANGENT,
-		TEXCOORD_0,
-		TEXCOORD_1,
-		COLOR_0,
-		JOINTS_0,
-		WEIGHTS_0
-	};
-
 	struct GLTFAttribute
 	{
 		GLTFAttributeType type;
 		const GLTFAccessor* pAccessor;
 	};
 
-	enum class GLTFPrimitiveMode
-	{
-		POINTS = 0,
-		LINES = 1,
-		LINE_LOOP = 2,
-		LINE_STRIP = 3,
-		TRIANGLES = 4,
-		TRIANGLE_STRIP = 5,
-		TRIANGLE_FAN = 6
-	};
-
-	class GLTFPrimitive : public GLTFElement
+	class F_GLTF_EXPORT GLTFPrimitive : public GLTFElement
 	{
 	public:
 		GLTFPrimitive(GLTFPrimitiveMode mode = GLTFPrimitiveMode::TRIANGLES, const GLTFMaterial* pMaterial = nullptr);

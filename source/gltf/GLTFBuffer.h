@@ -23,7 +23,7 @@ namespace flow
 {
 	class GLTFBufferView;
 
-	class GLTFBuffer : public GLTFMainElement
+	class F_GLTF_EXPORT GLTFBuffer : public GLTFMainElement
 	{
 		friend class GLTFObject;
 
@@ -32,24 +32,25 @@ namespace flow
 		virtual ~GLTFBuffer() { };
 
 	public:
-		void setByteLength(const size_t byteLength);
-		void setUri(const std::string& uri);
+		GLTFBufferView* addData(const char* pData, size_t byteLength);
+		GLTFBufferView* addImage(const std::string& imageFilePath);
+		GLTFBufferView* allocate(size_t byteLength);
 
-		size_t byteLength() const { return _byteLength; }
+		void setUri(const std::string& uri);
+		bool save(const std::string& bufferFilePath);
+
+		char* data() { return _buffer.data(); }
+		const char* data() const { return _buffer.data(); }
+
+		size_t byteLength() const { return _buffer.size(); }
 		const std::string& uri() const { return _uri; }
 
 		virtual json toJSON() const;
 
 	private:
-		void _resizeBuffer(size_t byteSize);
+		GLTFObject * _pObject;
+		std::vector<char> _buffer;
 
-		template<typename T>
-		void _getMinMax(const T* pData, size_t count, T* pMin, T* pMax);
-
-		std::vector<size_t> _buffer;
-
-		GLTFObject* _pObject;
-		size_t _byteLength;
 		std::string _uri;
 	};
 }

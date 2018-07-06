@@ -19,7 +19,7 @@ namespace flow
 {
 	class GLTFNode;
 
-	class GLTFScene : public GLTFMainElement
+	class F_GLTF_EXPORT GLTFScene : public GLTFMainElement
 	{
 		friend class GLTFObject;
 

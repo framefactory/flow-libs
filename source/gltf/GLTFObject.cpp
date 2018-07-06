@@ -5,8 +5,8 @@
 * @copyright (c) 2018 Frame Factory GmbH.
 */
 
-#include "GLTFElement.h"
-#include "GLTFMainElement.h"
+#include "GLTFObject.h"
+
 #include "GLTFScene.h"
 #include "GLTFNode.h"
 #include "GLTFMesh.h"
@@ -14,20 +14,21 @@
 #include "GLTFCamera.h"
 #include "GLTFBuffer.h"
 #include "GLTFBufferView.h"
-#include "GLTFAccessor.h"
+#include "GLTFAccessorT.h"
 #include "GLTFMaterial.h"
 #include "GLTFTexture.h"
 #include "GLTFImage.h"
 #include "GLTFSampler.h"
-//#include "GLTFAnimation.h"
+#include "GLTFAnimation.h"
 
-#include "GLTFObject.h"
+#include <fstream>
 
 using namespace flow;
 using std::string;
 using std::vector;
 using std::exception;
-
+using std::ofstream;
+using std::ios;
 
 GLTFObject::GLTFObject() :
 	_pMainScene(nullptr)
@@ -48,7 +49,20 @@ GLTFObject::~GLTFObject()
 	_deleteVectorOfPointers(_textures);
 	_deleteVectorOfPointers(_images);
 	_deleteVectorOfPointers(_samplers);
-	//_deleteVectorOfPointers(_animations);
+	_deleteVectorOfPointers(_animations);
+}
+
+bool GLTFObject::save(const std::string& gltfFilePath)
+{
+	std::ofstream stream(gltfFilePath, ios::out);
+	if (!stream.is_open()) {
+		return false;
+	}
+
+	stream << toJSON().dump(2);
+	stream.close();
+
+	return true;
 }
 
 void GLTFObject::setMainScene(const GLTFScene* pScene)
@@ -128,28 +142,11 @@ GLTFCamera* GLTFObject::createCamera(const string& name /* = string{} */)
 	return pCamera;
 }
 
-GLTFBuffer* GLTFObject::createBuffer(size_t byteLength, const string& name /* = string{} */)
+GLTFBuffer* GLTFObject::createBuffer(const string& name /* = string{} */)
 {
 	auto pBuffer = new GLTFBuffer(this, _buffers.size(), name);
-	pBuffer->setByteLength(byteLength);
 	_buffers.push_back(pBuffer);
 	return pBuffer;
-}
-
-GLTFBufferView* GLTFObject::createBufferView(const GLTFBuffer* pBuffer, const string& name /* = string{} */)
-{
-	auto pBufferView = new GLTFBufferView(_bufferViews.size(), name);
-	pBufferView->setBuffer(pBuffer);
-	_bufferViews.push_back(pBufferView);
-	return pBufferView;
-}
-
-GLTFAccessor* GLTFObject::createAccessor(const GLTFBufferView* pView, const string& name /* = string{} */)
-{
-	auto pAccessor = new GLTFAccessor(_accessors.size(), name);
-	pAccessor->setBufferView(pView);
-	_accessors.push_back(pAccessor);
-	return pAccessor;
 }
 
 GLTFMaterial* GLTFObject::createMaterial(const string& name /* = string{} */)
@@ -244,7 +241,7 @@ json GLTFObject::toJSON() const
 	_insertElements(result, "textures", _textures);
 	_insertElements(result, "images", _images);
 	_insertElements(result, "samplers", _samplers);
-	//_insertElements(result, "animations", _animations);
+	_insertElements(result, "animations", _animations);
 	
 	return result;
 }
@@ -252,6 +249,13 @@ json GLTFObject::toJSON() const
 std::string GLTFObject::toString(int indent /* = -1 */) const
 {
 	return toJSON().dump(indent);
+}
+
+GLTFBufferView* GLTFObject::_createBufferView(const string& name /* = string{} */)
+{
+	auto pBufferView = new GLTFBufferView(_bufferViews.size(), name);
+	_bufferViews.push_back(pBufferView);
+	return pBufferView;
 }
 
 template<typename T>
@@ -263,7 +267,7 @@ void GLTFObject::_insertElements(json& jsonObj, const string& propName, const ve
 
 	auto arr = json::array();
 	for (auto it = vector.begin(); it != vector.end(); ++it) {
-		arr.push_back((*it)->toJSON());
+		arr.emplace_back((*it)->toJSON());
 	}
 
 	jsonObj[propName] = arr;

@@ -10,8 +10,9 @@
 
 #include "library.h"
 #include "GLTFElement.h"
+#include "GLTFConstants.h"
 #include "GLTFAsset.h"
-#include "GLTFImage.h"
+#include "GLTFAccessorT.h"
 
 #include "../core/json.h"
 
@@ -30,7 +31,6 @@ namespace flow
 	class GLTFMesh;
 	class GLTFBuffer;
 	class GLTFBufferView;
-	class GLTFAccessor;
 	class GLTFMaterial;
 	class GLTFTexture;
 	class GLTFImage;
@@ -40,6 +40,8 @@ namespace flow
 
 	class F_GLTF_EXPORT GLTFObject : public GLTFElement
 	{
+		friend class GLTFBuffer;
+
 	public:
 		// Types
 		typedef std::vector<GLTFScene*> sceneVec_t;
@@ -62,6 +64,8 @@ namespace flow
 		GLTFObject();
 		virtual ~GLTFObject();
 
+		bool save(const std::string& gltfFilePath);
+
 		void setMainScene(const GLTFScene* pScene);
 		void setVersion(GLTFVersion version, GLTFVersion minVersion = GLTFVersion::UNDEFINED);
 		void setGenerator(const std::string& generator);
@@ -78,9 +82,10 @@ namespace flow
 		GLTFSkin* createSkin(const std::string& name = std::string{});
 		GLTFCamera* createCamera(const std::string& name = std::string{});
 
-		GLTFBuffer* createBuffer(size_t byteLength, const std::string& name = std::string{});
-		GLTFBufferView* createBufferView(const GLTFBuffer* pBuffer, const std::string& name = std::string{});
-		GLTFAccessor* createAccessor(const GLTFBufferView* pView, const std::string& name = std::string{});
+		GLTFBuffer* createBuffer(const std::string& name = std::string{});
+		
+		template<typename T>
+		GLTFAccessorT<T>* createAccessor(GLTFAccessorType type, std::string& name = std::string{});
 
 		GLTFMaterial* createMaterial(const std::string& name = std::string{});
 
@@ -92,13 +97,14 @@ namespace flow
 		GLTFImage* createImage(const GLTFBufferView* pBufferView, GLTFMimeType mimeType);
 
 		GLTFSampler* createSampler();
-
 		GLTFAnimation* createAnimation();
 
 		virtual json toJSON() const;
 		virtual std::string toString(int indent = -1) const;
 
 	private:
+		GLTFBufferView* _createBufferView(const std::string& name = std::string{});
+
 		template<typename T>
 		void _insertElements(json& jsonObj, const std::string& propName, const std::vector<T*>& vector) const;
 
@@ -127,6 +133,14 @@ namespace flow
 
 		animationVec_t _animations;
 	};
+
+	template<typename T>
+	GLTFAccessorT<T>* GLTFObject::createAccessor(GLTFAccessorType type, std::string& name)
+	{
+		auto pAccessor = new GLTFAccessorT<T>(_accessors.size(), type, name);
+		_accessors.push_back(pAccessor);
+		return pAccessor;
+	}
 }
 
 #endif // _FLOWLIBS_GLTF_OBJECT_H

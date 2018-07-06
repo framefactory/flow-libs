@@ -10,36 +10,14 @@
 
 #include "library.h"
 #include "GLTFMainElement.h"
+#include "GLTFConstants.h"
 
 #include <string>
 
 
 namespace flow
 {
-	enum class GLTFMagFilter
-	{
-		NEAREST = 9728,
-		LINEAR = 9729
-	};
-
-	enum class GLTFMinFilter
-	{
-		NEAREST = 9728,
-		LINEAR = 9729,
-		NEAREST_MIPMAP_NEAREST = 9984,
-		LINEAR_MIPMAP_NEAREST = 9985,
-		NEAREST_MIPMAP_LINEAR = 9986,
-		LINEAR_MIPMAP_LINEAR = 9987
-	};
-
-	enum class GLTFWrapMode
-	{
-		REPEAT = 10497,
-		CLAMP_TO_EDGE = 33071,
-		MIRRORED_REPEAT = 33648
-	};
-
-	class GLTFSampler : public GLTFMainElement
+	class F_GLTF_EXPORT GLTFSampler : public GLTFMainElement
 	{
 		friend class GLTFObject;
 

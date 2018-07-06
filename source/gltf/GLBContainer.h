@@ -16,7 +16,7 @@ namespace flow
 {
 	class GLTFObject;
 
-	class GLBContainer
+	class F_GLTF_EXPORT GLBContainer
 	{
 	protected:
 		GLBContainer(const GLTFObject* pObject);

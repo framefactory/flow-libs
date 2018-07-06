@@ -10,19 +10,13 @@
 
 #include "library.h"
 #include "GLTFElement.h"
+#include "GLTFConstants.h"
 
 #include <string>
 
 namespace flow
 {
-	enum class GLTFVersion
-	{
-		UNDEFINED,
-		GLTF_1_0,
-		GLTF_2_0
-	};
-
-	class GLTFAsset : public GLTFElement
+	class F_GLTF_EXPORT GLTFAsset : public GLTFElement
 	{
 	public:
 		GLTFAsset(GLTFVersion version = GLTFVersion::GLTF_2_0);

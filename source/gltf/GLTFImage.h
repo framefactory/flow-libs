@@ -10,6 +10,7 @@
 
 #include "library.h"
 #include "GLTFMainElement.h"
+#include "GLTFConstants.h"
 
 #include <string>
 
@@ -18,13 +19,7 @@ namespace flow
 {
 	class GLTFBufferView;
 
-	enum class GLTFMimeType
-	{
-		IMAGE_JPEG,
-		IMAGE_PNG
-	};
-
-	class GLTFImage : public GLTFMainElement
+	class F_GLTF_EXPORT GLTFImage : public GLTFMainElement
 	{
 		friend class GLTFObject;
 

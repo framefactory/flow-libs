@@ -9,10 +9,12 @@
 #define _FLOWLIBS_GLTF_MATERIAL_H
 
 #include "library.h"
-#include "GLTFElement.h"
 #include "GLTFMainElement.h"
+#include "GLTFConstants.h"
+
 #include "GLTFTextureInfo.h"
 #include "GLTFPBRMetallicRoughness.h"
+
 #include "../math/Vector3T.h"
 
 #include <string>
@@ -20,14 +22,7 @@
 
 namespace flow
 {
-	enum class GLTFAlphaMode
-	{
-		OPAQUE,
-		MASK,
-		BLEND
-	};
-
-	class GLTFMaterial : public GLTFMainElement
+	class F_GLTF_EXPORT GLTFMaterial : public GLTFMainElement
 	{
 		friend class GLTFObject;
 

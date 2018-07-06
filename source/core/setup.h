@@ -544,12 +544,20 @@ namespace flow
 	operator enum_type() const { return _state; } \
 	bool operator==(enum_type state) const { return _state == state; } \
 	bool operator!=(enum_type state) const { return _state != state; } \
+	const char* name() const; \
+	private: enum_type _state;
+
+#define F_DECLARE_SERIALIZABLE_ENUM(exportMacro, className, defaultState) \
+	public: className(enum_type state = defaultState) : _state(state) { } \
+	operator enum_type() const { return _state; } \
+	bool operator==(enum_type state) const { return _state == state; } \
+	bool operator!=(enum_type state) const { return _state != state; } \
 	friend exportMacro flow::Archive& operator<<(flow::Archive& ar, const className& obj); \
 	friend exportMacro flow::Archive& operator>>(flow::Archive& ar, className& obj); \
 	const char* name() const; \
 	private: enum_type _state;
 
-#define F_IMPLEMENT_ENUM(className) \
+#define F_IMPLEMENT_SERIALIZABLE_ENUM(className) \
 	flow::Archive& operator<<(flow::Archive& ar, const className& obj) { \
 	ar << (className::value_type)obj._state; return ar; } \
 	flow::Archive& operator>>(flow::Archive& ar, className& obj) { \
@@ -557,6 +565,7 @@ namespace flow
 
 #define F_ENUM_NAME(text) case text: return #text;
 #define F_ENUM_CASE(entry, text) case entry: return text;
+#define F_ENUM_ASSERT_DEFAULT default: F_ASSERT(false); return "(undefined)";
 
 // -----------------------------------------------------------------------------
 

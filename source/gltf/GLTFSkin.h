@@ -16,7 +16,7 @@
 
 namespace flow
 {
-	class GLTFSkin : public GLTFMainElement
+	class F_GLTF_EXPORT GLTFSkin : public GLTFMainElement
 	{
 		friend class GLTFObject;
 

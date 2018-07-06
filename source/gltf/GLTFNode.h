@@ -25,7 +25,7 @@ namespace flow
 	class GLTFSkin;
 	class GLTFCamera;
 
-	class GLTFNode : public GLTFMainElement
+	class F_GLTF_EXPORT GLTFNode : public GLTFMainElement
 	{
 		friend class GLTFObject;
 
@@ -59,7 +59,7 @@ namespace flow
 		Vector3f* _pScale;
 	};
 
-	class GLTFMeshNode : public GLTFNode
+	class F_GLTF_EXPORT GLTFMeshNode : public GLTFNode
 	{
 		friend class GLTFObject;
 
@@ -73,7 +73,7 @@ namespace flow
 		const GLTFMesh* _pMesh;
 	};
 
-	class GLTFCameraNode : public GLTFNode
+	class F_GLTF_EXPORT GLTFCameraNode : public GLTFNode
 	{
 		friend class GLTFObject;
 
@@ -87,7 +87,7 @@ namespace flow
 		const GLTFCamera* _pCamera;
 	};
 
-	class GLTFSkinNode : public GLTFNode
+	class F_GLTF_EXPORT GLTFSkinNode : public GLTFNode
 	{
 		friend class GLTFObject;
 

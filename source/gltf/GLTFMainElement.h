@@ -15,7 +15,7 @@
 
 namespace flow
 {
-	class GLTFMainElement : public GLTFElement
+	class F_GLTF_EXPORT GLTFMainElement : public GLTFElement
 	{
 	protected:
 		GLTFMainElement(size_t index, const std::string& name = std::string{});

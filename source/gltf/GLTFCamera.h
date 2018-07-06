@@ -16,7 +16,7 @@
 
 namespace flow
 {
-	class GLTFCamera : public GLTFMainElement
+	class F_GLTF_EXPORT GLTFCamera : public GLTFMainElement
 	{
 		friend class GLTFObject;
 

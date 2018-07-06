@@ -5,11 +5,7 @@
 * @copyright (c) 2018 Frame Factory GmbH.
 */
 
-#include "gltf/GLTFObject.h"
-#include "gltf/GLTFScene.h"
-#include "gltf/GLTFNode.h"
-#include "gltf/GLTFMesh.h"
-#include "gltf/GLTFAccessor.h"
+#include "gltf/gltf.h"
 
 #include <iostream>
 
@@ -21,10 +17,8 @@ int main(int argc, char** ppArgv)
 	asset.setGenerator("https://github.com/framelab/flow-libs");
 	asset.setCopyright("(c) 2018 Frame Factory GmbH");
 
-	auto pBuffer = asset.createBuffer(65536);
-	auto pBufferView = asset.createBufferView(pBuffer);
-	auto pPositionAccessor = asset.createAccessor(pBufferView);
-	pPositionAccessor->setType(GLTFAccessorType::VEC3, GLTFAccessorComponent::FLOAT);
+	auto pBuffer = asset.createBuffer();
+	auto pPositionAccessor = asset.createAccessor<float>(GLTFAccessorType::VEC3);
 
 	auto pMesh = asset.createMesh();
 	auto& primitive = pMesh->createPrimitive(GLTFPrimitiveMode::TRIANGLES);

@@ -16,7 +16,7 @@
 
 namespace flow
 {
-	class GLTFElement
+	class F_GLTF_EXPORT GLTFElement
 	{
 	public:
 		GLTFElement() {}
