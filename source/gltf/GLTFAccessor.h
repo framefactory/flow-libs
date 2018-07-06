@@ -11,6 +11,10 @@
 #include "library.h"
 #include "GLTFMainElement.h"
 
+#include "../math/Vector2T.h"
+#include "../math/Vector3T.h"
+#include "../math/Vector4T.h"
+
 #include <string>
 #include <vector>
 
@@ -51,6 +55,7 @@ namespace flow
 
 	public:
 		void setBufferView(const GLTFBufferView* pBufferView);
+
 		void setType(GLTFAccessorType type, GLTFAccessorComponent component, bool normalized = false);
 		void setRange(size_t elementCount, size_t byteOffset, size_t byteStride = 0);
 		void setMin(const std::vector<double>& min);
