@@ -21,7 +21,7 @@ namespace flow
 
 	class F_GLTF_EXPORT GLTFBufferView : public GLTFMainElement
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 		friend class GLTFBuffer;
 
 	protected:

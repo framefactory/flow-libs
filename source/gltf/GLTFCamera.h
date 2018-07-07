@@ -18,7 +18,7 @@ namespace flow
 {
 	class F_GLTF_EXPORT GLTFCamera : public GLTFMainElement
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFCamera(size_t index, const std::string& name);

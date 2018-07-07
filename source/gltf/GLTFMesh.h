@@ -24,7 +24,7 @@ namespace flow
 
 	class F_GLTF_EXPORT GLTFMesh : public GLTFMainElement
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFMesh(size_t index, const std::string& name = std::string{});

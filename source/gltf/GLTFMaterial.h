@@ -24,7 +24,7 @@ namespace flow
 {
 	class F_GLTF_EXPORT GLTFMaterial : public GLTFMainElement
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFMaterial(size_t index, const std::string& name = std::string{});

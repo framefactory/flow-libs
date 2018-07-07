@@ -19,7 +19,7 @@ namespace flow
 {
 	class F_GLTF_EXPORT GLTFSampler : public GLTFMainElement
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFSampler(size_t index, const std::string& name = std::string{});

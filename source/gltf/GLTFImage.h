@@ -21,7 +21,7 @@ namespace flow
 
 	class F_GLTF_EXPORT GLTFImage : public GLTFMainElement
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFImage(size_t index, const std::string& name = std::string{});

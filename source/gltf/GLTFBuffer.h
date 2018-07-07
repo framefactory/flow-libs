@@ -25,10 +25,10 @@ namespace flow
 
 	class F_GLTF_EXPORT GLTFBuffer : public GLTFMainElement
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
-		GLTFBuffer(GLTFObject* pObject, size_t index, const std::string& name = std::string{});
+		GLTFBuffer(GLTFAsset* pAsset, size_t index, const std::string& name = std::string{});
 		virtual ~GLTFBuffer() { };
 
 	public:
@@ -48,7 +48,7 @@ namespace flow
 		virtual json toJSON() const;
 
 	private:
-		GLTFObject * _pObject;
+		GLTFAsset * _pAsset;
 		std::vector<char> _buffer;
 
 		std::string _uri;

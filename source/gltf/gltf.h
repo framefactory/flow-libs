@@ -11,7 +11,7 @@
 #include "library.h"
 
 #include "GLTFConstants.h"
-#include "GLTFObject.h"
+#include "GLTFAsset.h"
 #include "GLTFScene.h"
 #include "GLTFNode.h"
 #include "GLTFCamera.h"
@@ -25,7 +25,7 @@
 #include "GLTFImage.h"
 #include "GLTFSampler.h"
 #include "GLTFSkin.h"
-#include "GLTFAsset.h"
+#include "GLTFAssetInfo.h"
 #include "GLTFAnimation.h"
 
 #endif // _FLOWLIBS_GLTF_H

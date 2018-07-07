@@ -19,7 +19,7 @@ namespace flow
 {
 	class F_GLTF_EXPORT GLTFAnimation : public GLTFMainElement
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFAnimation(size_t index, const std::string& name = std::string{});

@@ -22,7 +22,7 @@ namespace flow
 	template <typename T>
 	class GLTFAccessorT : public GLTFAccessor
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFAccessorT(size_t index, GLTFAccessorType type, std::string& name = std::string{}) :

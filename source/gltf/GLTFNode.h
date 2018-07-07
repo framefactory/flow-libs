@@ -27,7 +27,7 @@ namespace flow
 
 	class F_GLTF_EXPORT GLTFNode : public GLTFMainElement
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFNode(size_t index, const std::string& name = std::string{});
@@ -61,7 +61,7 @@ namespace flow
 
 	class F_GLTF_EXPORT GLTFMeshNode : public GLTFNode
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFMeshNode(size_t index, const GLTFMesh* pMesh, const std::string& name = std::string{});
@@ -75,7 +75,7 @@ namespace flow
 
 	class F_GLTF_EXPORT GLTFCameraNode : public GLTFNode
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFCameraNode(size_t index, const GLTFCamera* pCamera, const std::string& name = std::string{});
@@ -89,7 +89,7 @@ namespace flow
 
 	class F_GLTF_EXPORT GLTFSkinNode : public GLTFNode
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFSkinNode(size_t index, const GLTFSkin* pSkin, const std::string& name = std::string{});

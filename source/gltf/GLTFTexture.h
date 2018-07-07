@@ -21,7 +21,7 @@ namespace flow
 
 	class F_GLTF_EXPORT GLTFTexture : public GLTFMainElement
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFTexture(size_t index, const std::string& name = std::string{});

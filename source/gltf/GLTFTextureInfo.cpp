@@ -51,7 +51,7 @@ void GLTFNormalTextureInfo::set(const GLTFTexture* pTexture, size_t texCoord /* 
 
 json GLTFNormalTextureInfo::toJSON() const
 {
-	json result = GLTFElement::toJSON();
+	json result = GLTFTextureInfo::toJSON();
 
 	if (_scale != 1.0f) {
 		result["scale"] = _scale;
@@ -75,7 +75,7 @@ void GLTFOcclusionTextureInfo::set(const GLTFTexture* pTexture, size_t texCoord 
 
 json GLTFOcclusionTextureInfo::toJSON() const
 {
-	json result = GLTFElement::toJSON();
+	json result = GLTFTextureInfo::toJSON();
 
 	if (_strength != 1.0f) {
 		result["strength"] = _strength;

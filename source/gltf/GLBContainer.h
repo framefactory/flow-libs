@@ -14,19 +14,40 @@
 
 namespace flow
 {
-	class GLTFObject;
+	class GLTFAsset;
 
 	class F_GLTF_EXPORT GLBContainer
 	{
-	protected:
-		GLBContainer(const GLTFObject* pObject);
+	public:
+		GLBContainer(const GLTFAsset* pAsset);
 		virtual ~GLBContainer() {};
 
-	public:
 		bool save(const std::string& fileName) const;
 
 	private:
-		const GLTFObject* _pObject;
+		uint32_t _spaces = 0x20202020;
+		uint32_t _null = 0;
+
+		mutable struct
+		{
+			uint32_t magic = 0x46546C67;
+			uint32_t version = 2;
+			uint32_t length = 0;
+		} _glbHeader;
+
+		mutable struct
+		{
+			uint32_t length = 0;
+			uint32_t type = 0x4E4F534A;
+		} _jsonChunkHeader;
+
+		mutable struct
+		{
+			uint32_t length = 0;
+			uint32_t type = 0x004E4942;
+		} _binChunkHeader;
+
+		const GLTFAsset* _pAsset;
 	};
 }
 

@@ -18,7 +18,7 @@ namespace flow
 {
 	class F_GLTF_EXPORT GLTFSkin : public GLTFMainElement
 	{
-		friend class GLTFObject;
+		friend class GLTFAsset;
 
 	protected:
 		GLTFSkin(size_t index, const std::string& name = std::string{});

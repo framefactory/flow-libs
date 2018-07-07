@@ -8,7 +8,7 @@
 #include "GLTFBuffer.h"
 #include "GLTFBufferView.h"
 #include "GLTFAccessor.h"
-#include "GLTFObject.h"
+#include "GLTFAsset.h"
 
 #include <fstream>
 #include <cstring>
@@ -20,9 +20,9 @@ using std::ofstream;
 using std::ios;
 
 
-GLTFBuffer::GLTFBuffer(GLTFObject* pObject, size_t index, const string& name /* = string{} */) :
+GLTFBuffer::GLTFBuffer(GLTFAsset* pAsset, size_t index, const string& name /* = string{} */) :
 	GLTFMainElement(index, name),
-	_pObject(pObject)
+	_pAsset(pAsset)
 {
 }
 
@@ -59,7 +59,7 @@ GLTFBufferView* GLTFBuffer::allocate(size_t byteLength)
 
 	_buffer.resize(newBufferSize);
 
-	auto pBufferView = _pObject->_createBufferView();
+	auto pBufferView = _pAsset->_createBufferView();
 	pBufferView->_set(this, byteStart, byteLength);
 	return pBufferView;
 }
