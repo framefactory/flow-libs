@@ -18,7 +18,7 @@ GLTFBufferView::GLTFBufferView(size_t index, const string& name /* = std::string
 	_byteOffset(0),
 	_byteLength(0),
 	_byteStride(0),
-	_target(GLTFBufferViewTarget::ARRAY_BUFFER)
+	_target(GLTFBufferViewTarget::UNDEFINED)
 {
 }
 

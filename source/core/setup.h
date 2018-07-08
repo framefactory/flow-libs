@@ -362,9 +362,10 @@
 //  Helper Macros 
 // -----------------------------------------------------------------------------
 
-#define F_SAFE_DELETE(p)			{ if(p) { delete (p);     (p) = NULL; } }
-#define F_SAFE_DELETE_ARRAY(p)		{ if(p) { delete[] (p);   (p) = NULL; } }
-#define F_SAFE_RELEASE(p)			{ if(p) { (p)->Release(); (p) = NULL; } }
+#define F_SAFE_DELETE(p)           { if(p) { delete (p);     (p) = NULL; } }
+#define F_SAFE_DELETE_ARRAY(p)     { if(p) { delete[] (p);   (p) = NULL; } }
+#define F_SAFE_DELETE_PTR_RANGE(v) { for(auto it = (v).begin(); it != (v).end(); ++it) { delete *it; } }
+#define F_SAFE_RELEASE(p)          { if(p) { (p)->Release(); (p) = NULL; } }
 
 // Library helper macros -------
 

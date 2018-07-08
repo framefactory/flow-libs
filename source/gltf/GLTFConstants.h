@@ -67,6 +67,8 @@ namespace flow
 			FLOAT          = 0x1406
 		};
 
+		size_t byteSize() const;
+
 		template<typename T>
 		static GLTFAccessorComponent type() { F_ASSERT(false); return BYTE; }
 

@@ -30,11 +30,11 @@ namespace flow
 	class F_GLTF_EXPORT GLTFPrimitive : public GLTFElement
 	{
 	public:
-		GLTFPrimitive(GLTFPrimitiveMode mode = GLTFPrimitiveMode::TRIANGLES, const GLTFMaterial* pMaterial = nullptr);
-		virtual ~GLTFPrimitive() {}
-
 		typedef std::vector<GLTFAttribute> attributeVec_t;
 		typedef std::vector<attributeVec_t> targetVec_t;
+
+		GLTFPrimitive(GLTFPrimitiveMode mode = GLTFPrimitiveMode::TRIANGLES, const GLTFMaterial* pMaterial = nullptr);
+		virtual ~GLTFPrimitive() {}
 
 		void setMode(GLTFPrimitiveMode mode);
 		void setMaterial(const GLTFMaterial* pMaterial);
@@ -51,13 +51,12 @@ namespace flow
 		const GLTFMaterial* material() const { return _pMaterial; }
 		const GLTFAccessor* indices() const { return _pIndicesAccessor; }
 		const attributeVec_t& attributes() const { return _attributes; }
+		const GLTFAccessor* attributeAccessor(GLTFAttributeType type) const;
 		const targetVec_t& targets() const { return _targets; }
 
 		virtual json toJSON() const;
 
 	private:
-		const char* _attribName(GLTFAttributeType type) const;
-
 		GLTFPrimitiveMode _mode;
 		const GLTFMaterial* _pMaterial;
 		const GLTFAccessor* _pIndicesAccessor;

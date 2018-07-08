@@ -64,17 +64,30 @@ void GLTFPrimitive::addTexCoords(const GLTFAccessor* pAccessor)
 	_attributes.push_back({ GLTFAttributeType::TEXCOORD_0, pAccessor });
 }
 
-json GLTFPrimitive::toJSON() const
+const GLTFAccessor* GLTFPrimitive::attributeAccessor(GLTFAttributeType type) const
 {
-	json attribDict;
-	for (auto it = _attributes.begin(); it != _attributes.end(); ++it) {
-		attribDict[_attribName(it->type)] = it->pAccessor->index();
+	for (size_t i = 0; i < _attributes.size(); ++i) {
+		if (type == _attributes[i].type) {
+			return _attributes[i].pAccessor;
+		}
 	}
 
+	return nullptr;
+}
+
+json GLTFPrimitive::toJSON() const
+{
 	json result = GLTFElement::toJSON();
 
-	result["attributes"] = attribDict;
 	result["mode"] = (int)_mode;
+
+	if (!_attributes.empty()) {
+		json attribDict;
+		for (auto it = _attributes.begin(); it != _attributes.end(); ++it) {
+			attribDict[it->type.name()] = it->pAccessor->index();
+		}
+		result["attributes"] = attribDict;
+	}
 
 	if (_pIndicesAccessor) {
 		result["indices"] = _pIndicesAccessor->index();
@@ -88,7 +101,7 @@ json GLTFPrimitive::toJSON() const
 		for (auto tar_it = _targets.begin(); tar_it != _targets.end(); ++tar_it) {
 			auto targetDict = json();
 			for (auto atr_it = tar_it->begin(); atr_it != tar_it->end(); ++atr_it) {
-				targetDict[_attribName(atr_it->type)] = atr_it->pAccessor->index();
+				targetDict[atr_it->type.name()] = atr_it->pAccessor->index();
 			}
 			targetArr.push_back(targetDict);
 		}
@@ -97,19 +110,4 @@ json GLTFPrimitive::toJSON() const
 	}
 
 	return result;
-}
-
-const char* GLTFPrimitive::_attribName(GLTFAttributeType type) const
-{
-	switch (type) {
-	case GLTFAttributeType::POSITION: return "POSITION";
-	case GLTFAttributeType::NORMAL: return "NORMAL";
-	case GLTFAttributeType::TANGENT: return "TANGENT";
-	case GLTFAttributeType::TEXCOORD_0: return "TEXCOORD_0";
-	case GLTFAttributeType::TEXCOORD_1: return "TEXCOORD_1";
-	case GLTFAttributeType::COLOR_0: return "COLOR_0";
-	case GLTFAttributeType::JOINTS_0: return "JOINTS_0";
-	case GLTFAttributeType::WEIGHTS_0: return "WEIGHTS_0";
-	default: return "POSITION";
-	}
 }

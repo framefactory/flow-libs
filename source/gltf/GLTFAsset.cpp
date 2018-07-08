@@ -43,6 +43,7 @@ GLTFAsset::GLTFAsset() :
 
 GLTFAsset::~GLTFAsset()
 {
+	_deleteVectorOfPointers(_extensionsUsed);
 	_deleteVectorOfPointers(_scenes);
 	_deleteVectorOfPointers(_nodes);
 	_deleteVectorOfPointers(_meshes);
@@ -98,11 +99,12 @@ void GLTFAsset::setCopyright(const string& copyright)
 	_asset.setCopyright(copyright);
 }
 
-void GLTFAsset::addExtension(const GLTFExtension& extension, bool isRequired)
+void GLTFAsset::addExtension(const GLTFExtension* pExtension, bool isRequired)
 {
-	_extensionsUsed.emplace_back(extension.name());
+	_extensionsUsed.push_back(pExtension);
+
 	if (isRequired) {
-		_extensionsRequired.emplace_back(extension.name());
+		_extensionsRequired.emplace_back(pExtension->name());
 	}
 }
 
@@ -278,7 +280,11 @@ json GLTFAsset::toJSON() const
 	}
 
 	if (!_extensionsUsed.empty()) {
-		result["extensionsUsed"] = _extensionsUsed;
+		json extensions = json::array();
+		for (size_t i = 0; i < _extensionsUsed.size(); ++i) {
+			extensions.push_back(_extensionsUsed[i]->name());
+		}
+		result["extensionsUsed"] = extensions;
 	}
 	if (!_extensionsRequired.empty()) {
 		result["extensionsRequired"] = _extensionsRequired;

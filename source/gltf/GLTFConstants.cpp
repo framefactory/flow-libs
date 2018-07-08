@@ -58,6 +58,20 @@ const char* GLTFAccessorType::name() const
 	}
 }
 
+size_t GLTFAccessorComponent::byteSize() const
+{
+	switch (_state) {
+	case BYTE: return sizeof(int8_t);
+	case UNSIGNED_BYTE: return sizeof(uint8_t);
+	case SHORT: return sizeof(int16_t);
+	case UNSIGNED_SHORT: return sizeof(uint16_t);
+	case INT: return sizeof(int32_t);
+	case UNSIGNED_INT: return sizeof(uint32_t);
+	case FLOAT: return sizeof(float);
+	default: F_ASSERT(false); return 1;
+	}
+}
+
 const char* GLTFAccessorComponent::name() const
 {
 	switch (_state) {

@@ -16,6 +16,8 @@
 
 namespace flow
 {
+	class GLTFElement;
+
 	class F_GLTF_EXPORT GLTFExtension
 	{
 	public:
@@ -23,6 +25,7 @@ namespace flow
 		virtual ~GLTFExtension() {}
 
 		virtual const char* name() const = 0;
+		virtual json toJSON() const = 0;
 
 	protected:
 	};

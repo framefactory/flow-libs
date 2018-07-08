@@ -125,91 +125,90 @@ namespace flow
 		//  Public commands ----------------------------------------------
 
 		/// Transpose the matrix.
-		void transpose();
+		Matrix4T<REAL>& transpose();
 		/// Invert the matrix using LU-decomposition (matrix must be non-singular!)
-		void invert();
+		Matrix4T<REAL>& invert();
 		/// Homogenizes the matrix by dividing all elements by the last element e[2][2];
-		void homogenize();
+		Matrix4T<REAL>& homogenize();
 
 		/// Replace the upper left 3-by-3 block by the given rotation matrix.
-		void replaceRotation(const Matrix3T<REAL>& rotation);
+		Matrix4T<REAL>& replaceRotation(const Matrix3T<REAL>& rotation);
 		/// Replace the upper left 3-by-3 block by the given column vectors.
-		void replaceRotation(const Vector3T<REAL>& rCol0, const Vector3T<REAL>& rCol1, const Vector3T<REAL>& rCol2);
+		Matrix4T<REAL>& replaceRotation(const Vector3T<REAL>& rCol0, const Vector3T<REAL>& rCol1, const Vector3T<REAL>& rCol2);
 		/// Replace the matrix' translation components by the given vector.
-		void replaceTranslation(const Vector3T<REAL>& translation);
+		Matrix4T<REAL>& replaceTranslation(const Vector3T<REAL>& translation);
 
 		/// Multiplies the given matrix from the right side. This
 		/// prepends the transformation represented by the matrix.
-		void prepend(const Matrix4T<REAL>& rhs);
+		Matrix4T<REAL>& prepend(const Matrix4T<REAL>& rhs);
 		/// Multiplies the given matrix from the left side. This
 		/// appends the transformation represented by the matrix.
-		void append(const Matrix4T<REAL>& lhs);
+		Matrix4T<REAL>& append(const Matrix4T<REAL>& lhs);
 
 		// TRANSFORMATIONS
 
 		/// Make a translation matrix using the given translation values.
-		void makeTranslation(REAL tx, REAL ty, REAL tz);
+		Matrix4T<REAL>& makeTranslation(REAL tx, REAL ty, REAL tz);
 		/// Make a translation matrix using the given translation vector.
-		void makeTranslation(const Vector3T<REAL>& tr)
-		{
+		Matrix4T<REAL>& makeTranslation(const Vector3T<REAL>& tr) {
 			return makeTranslation(tr.x(), tr.y(), tr.z());
 		}
 		/// Make a rotation matrix (x axis) using the given angle.
-		void makeRotationX(REAL angle);
+		Matrix4T<REAL>& makeRotationX(REAL angle);
 		/// Make a rotation matrix (y axis) using the given angle.
-		void makeRotationY(REAL angle);
+		Matrix4T<REAL>& makeRotationY(REAL angle);
 		/// Make a rotation matrix (z axis) using the given angle.
-		void makeRotationZ(REAL angle);
+		Matrix4T<REAL>& makeRotationZ(REAL angle);
 		/// Make a rotation matrix from the given yaw, pitch and roll angles.
-		void makeRotationYPR(REAL yaw, REAL pitch, REAL roll);
+		Matrix4T<REAL>& makeRotationYPR(REAL yaw, REAL pitch, REAL roll);
 		/// Make a rotation matrix from the given yaw, pitch and roll angles.
-		void makeRotationYPR(const Vector3T<REAL>& angles) {
+		Matrix4T<REAL>& makeRotationYPR(const Vector3T<REAL>& angles) {
 			return makeRotationYPR(angles.x(), angles.y(), angles.z());
 		}
 		/// Make a rotation about an arbitrary axis by the given angle.
-		void makeRotation(Vector3T<REAL>& axis, REAL angle);
+		Matrix4T<REAL>& makeRotation(Vector3T<REAL>& axis, REAL angle);
 		/// Make a rotation matrix using the given quaternion.
-		void makeRotation(const QuaternionT<REAL>& rotation);
+		Matrix4T<REAL>& makeRotation(const QuaternionT<REAL>& rotation);
 		/// Make a rotation matrix that rotates from v1 to v2.
-		void makeRotation(Vector3T<REAL> v1, Vector3T<REAL> v2);
+		Matrix4T<REAL>& makeRotation(Vector3T<REAL> v1, Vector3T<REAL> v2);
 
 		/// Make a scale matrix using the given scaling factors.
-		void makeScale(REAL sx, REAL sy, REAL sz);
+		Matrix4T<REAL>& makeScale(REAL sx, REAL sy, REAL sz);
 
 		// CAMERAS
 
 		/// Makes a look-at camera.
-		void makeLookAtCamera(const Vector3T<REAL>& viewer,
+		Matrix4T<REAL>& makeLookAtCamera(const Vector3T<REAL>& viewer,
 			const Vector3T<REAL>& target, const Vector3T<REAL>& up);
 		/// Makes an orbit camera.
-		void makeOrbitCamera(const Vector3T<REAL>& target,
+		Matrix4T<REAL>& makeOrbitCamera(const Vector3T<REAL>& target,
 			const Vector3T<REAL>& yawPitchRoll, REAL distance);
 
 		// PROJECTIONS
 
 		/// Make a left-handed orthogonal projection matrix.
-		void makeProjectionOrthogonalLH(REAL width, REAL height, REAL zNear, REAL zFar,
+		Matrix4T<REAL>& makeProjectionOrthogonalLH(REAL width, REAL height, REAL zNear, REAL zFar,
 			const Vector2T<REAL> center = Vector2T<REAL>(0, 0));
 		/// Make a right-handed orthogonal projection matrix.
-		void makeProjectionOrthogonalRH(REAL width, REAL height, REAL zNear, REAL zFar,
+		Matrix4T<REAL>& makeProjectionOrthogonalRH(REAL width, REAL height, REAL zNear, REAL zFar,
 			const Vector2T<REAL> center = Vector2T<REAL>(0, 0));
 
 		/// Make a left-handed perspective projection matrix.
-		void makeProjectionPerspectiveLH(REAL fov, bool fovVertical, REAL aspect, REAL zNear, REAL zFar,
+		Matrix4T<REAL>& makeProjectionPerspectiveLH(REAL fov, bool fovVertical, REAL aspect, REAL zNear, REAL zFar,
 			const Vector2T<REAL> center = Vector2T<REAL>(0, 0));
 		/// Make a right-handed perspective projection matrix.
-		void makeProjectionPerspectiveRH(REAL fov, bool fovVertical, REAL aspect, REAL zNear, REAL zFar,
+		Matrix4T<REAL>& makeProjectionPerspectiveRH(REAL fov, bool fovVertical, REAL aspect, REAL zNear, REAL zFar,
 			const Vector2T<REAL> center = Vector2T<REAL>(0, 0));
 
 		//  Public queries -----------------------------------------------
 
 		/// Extracts the upper left 3x3 rotation matrix.
-		void extractRotation(OUT Matrix3T<REAL>& rotationMatrix);
+		void extractRotation(OUT Matrix3T<REAL>& rotationMatrix) const;
 		/// Calculates and returns the determinant of the matrix.
 		REAL determinant() const;
 
 		/// Converts the vector to a JSON array.
-		json toJSON() const;
+		json toJSON(storage_t storageOrder  = ColumnMajor) const;
 
 		//  Internal data members ----------------------------------------
 
@@ -507,7 +506,7 @@ namespace flow
 	// Public commands -------------------------------------------------------------
 
 	template <typename REAL>
-	inline void Matrix4T<REAL>::transpose()
+	inline Matrix4T<REAL>& Matrix4T<REAL>::transpose()
 	{
 		REAL t;
 
@@ -522,7 +521,7 @@ namespace flow
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::invert()
+	Matrix4T<REAL>& Matrix4T<REAL>::invert()
 	{
 		// check if matrix is orthogonal
 		// check values of row 4
@@ -561,7 +560,7 @@ namespace flow
 	}
 
 	template <typename REAL>
-	inline void Matrix4T<REAL>::homogenize()
+	inline Matrix4T<REAL>& Matrix4T<REAL>::homogenize()
 	{
 		REAL f = REAL(1.0) / m_row[3][3];
 		for (size_t i = 0; i < 4; ++i)
@@ -571,33 +570,39 @@ namespace flow
 	}
 
 	template <typename REAL>
-	inline void Matrix4T<REAL>::replaceRotation(const Matrix3T<REAL>& rotation)
+	inline Matrix4T<REAL>& Matrix4T<REAL>::replaceRotation(const Matrix3T<REAL>& rotation)
 	{
 		m_row[0][0] = rotation[0][0]; m_row[0][1] = rotation[0][1]; m_row[0][2] = rotation[0][2];
 		m_row[1][0] = rotation[1][0]; m_row[1][1] = rotation[1][1]; m_row[1][2] = rotation[1][2];
 		m_row[2][0] = rotation[2][0]; m_row[2][1] = rotation[2][1]; m_row[2][2] = rotation[2][2];
+
+		return *this;
 	}
 
 	template <typename REAL>
-	inline void Matrix4T<REAL>::replaceRotation(const Vector3T<REAL>& rCol0,
+	inline Matrix4T<REAL>& Matrix4T<REAL>::replaceRotation(const Vector3T<REAL>& rCol0,
 		const Vector3T<REAL>& rCol1,
 		const Vector3T<REAL>& rCol2)
 	{
 		m_row[0][0] = rCol0[0]; m_row[0][1] = rCol1[0]; m_row[0][2] = rCol2[0];
 		m_row[1][0] = rCol0[1]; m_row[1][1] = rCol1[1]; m_row[1][2] = rCol2[1];
 		m_row[2][0] = rCol0[2]; m_row[2][1] = rCol1[2]; m_row[2][2] = rCol2[2];
+
+		return *this;
 	}
 
 	template <typename REAL>
-	inline void Matrix4T<REAL>::replaceTranslation(const Vector3T<REAL>& translation)
+	inline Matrix4T<REAL>& Matrix4T<REAL>::replaceTranslation(const Vector3T<REAL>& translation)
 	{
 		m_row[0][3] = translation.x();
 		m_row[1][3] = translation.y();
 		m_row[2][3] = translation.z();
+
+		return *this;
 	}
 
 	template <typename REAL>
-	inline void Matrix4T<REAL>::prepend(const Matrix4T<REAL>& rhs)
+	inline Matrix4T<REAL>& Matrix4T<REAL>::prepend(const Matrix4T<REAL>& rhs)
 	{
 		Matrix4T<REAL> result;
 		for (size_t i = 0; i < 4; i++)
@@ -612,10 +617,11 @@ namespace flow
 		}
 
 		*this = result;
+		return *this;
 	}
 
 	template <typename REAL>
-	inline void Matrix4T<REAL>::append(const Matrix4T<REAL>& lhs)
+	inline Matrix4T<REAL>& Matrix4T<REAL>::append(const Matrix4T<REAL>& lhs)
 	{
 		Matrix4T<REAL> result;
 		for (size_t i = 0; i < 4; i++)
@@ -630,21 +636,24 @@ namespace flow
 		}
 
 		*this = result;
+		return *this;
 	}
 
 	// ----- Transformations -----
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeTranslation(REAL tx, REAL ty, REAL tz)
+	Matrix4T<REAL>& Matrix4T<REAL>::makeTranslation(REAL tx, REAL ty, REAL tz)
 	{
 		m_row[0][0] = REAL(1.0); m_row[0][1] = REAL(0.0); m_row[0][2] = REAL(0.0); m_row[0][3] = tx;
 		m_row[1][0] = REAL(0.0); m_row[1][1] = REAL(1.0); m_row[1][2] = REAL(0.0); m_row[1][3] = ty;
 		m_row[2][0] = REAL(0.0); m_row[2][1] = REAL(0.0); m_row[2][2] = REAL(1.0); m_row[2][3] = tz;
 		m_row[3][0] = REAL(0.0); m_row[3][1] = REAL(0.0); m_row[3][2] = REAL(0.0); m_row[3][3] = REAL(1.0);
+
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeRotationX(REAL angle)
+	Matrix4T<REAL>& Matrix4T<REAL>::makeRotationX(REAL angle)
 	{
 		REAL si = sin(angle);
 		REAL co = cos(angle);
@@ -653,10 +662,12 @@ namespace flow
 		m_row[1][0] = REAL(0.0); m_row[1][1] = co;        m_row[1][2] = -si;       m_row[1][3] = REAL(0.0);
 		m_row[2][0] = REAL(0.0); m_row[2][1] = si;        m_row[2][2] = co;        m_row[2][3] = REAL(0.0);
 		m_row[3][0] = REAL(0.0); m_row[3][1] = REAL(0.0); m_row[3][2] = REAL(0.0); m_row[3][3] = REAL(1.0);
+
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeRotationY(REAL angle)
+	Matrix4T<REAL>& Matrix4T<REAL>::makeRotationY(REAL angle)
 	{
 		REAL si = sin(angle);
 		REAL co = cos(angle);
@@ -665,10 +676,12 @@ namespace flow
 		m_row[1][0] = REAL(0.0); m_row[1][1] = REAL(1.0); m_row[1][2] = REAL(0.0); m_row[1][3] = REAL(0.0);
 		m_row[2][0] = -si;       m_row[2][1] = REAL(0.0); m_row[2][2] = co;        m_row[2][3] = REAL(0.0);
 		m_row[3][0] = REAL(0.0); m_row[3][1] = REAL(0.0); m_row[3][2] = REAL(0.0); m_row[3][3] = REAL(1.0);
+
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeRotationZ(REAL angle)
+	Matrix4T<REAL>& Matrix4T<REAL>::makeRotationZ(REAL angle)
 	{
 		REAL si = sin(angle);
 		REAL co = cos(angle);
@@ -677,10 +690,12 @@ namespace flow
 		m_row[1][0] = si;        m_row[1][1] = co;        m_row[1][2] = REAL(0.0); m_row[1][3] = REAL(0.0);
 		m_row[2][0] = REAL(0.0); m_row[2][1] = REAL(0.0); m_row[2][2] = REAL(1.0); m_row[2][3] = REAL(0.0);
 		m_row[3][0] = REAL(0.0); m_row[3][1] = REAL(0.0); m_row[3][2] = REAL(0.0); m_row[3][3] = REAL(1.0);
+
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeRotationYPR(REAL yaw, REAL pitch, REAL roll)
+	Matrix4T<REAL>& Matrix4T<REAL>::makeRotationYPR(REAL yaw, REAL pitch, REAL roll)
 	{
 		REAL sy = (REAL)sin(yaw); REAL cy = (REAL)cos(yaw);
 		REAL sp = (REAL)sin(pitch); REAL cp = (REAL)cos(pitch);
@@ -699,10 +714,12 @@ namespace flow
 		m_row[0][3] = m_row[1][3] = m_row[2][3] = REAL(0.0);
 		m_row[3][0] = m_row[3][1] = m_row[3][2] = REAL(0.0);
 		m_row[3][3] = REAL(1.0);
+
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeRotation(Vector3T<REAL>& axis, REAL angle)
+	Matrix4T<REAL>& Matrix4T<REAL>::makeRotation(Vector3T<REAL>& axis, REAL angle)
 	{
 		REAL si = (REAL)sin(angle);
 		REAL co = (REAL)cos(angle);
@@ -721,10 +738,12 @@ namespace flow
 		m_row[0][3] = m_row[1][3] = m_row[2][3] = REAL(0.0);
 		m_row[3][0] = m_row[3][1] = m_row[3][2] = REAL(0.0);
 		m_row[3][3] = REAL(1.0);
+
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeRotation(const QuaternionT<REAL>& rotation)
+	Matrix4T<REAL>& Matrix4T<REAL>::makeRotation(const QuaternionT<REAL>& rotation)
 	{
 		REAL x = rotation.x;
 		REAL y = rotation.y;
@@ -751,10 +770,12 @@ namespace flow
 
 		m_row[3][0] = m_row[3][1] = m_row[3][2] = REAL(0.0);
 		m_row[3][3] = REAL(1.0);
+
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeRotation(Vector3T<REAL> s, Vector3T<REAL> t)
+	Matrix4T<REAL>& Matrix4T<REAL>::makeRotation(Vector3T<REAL> s, Vector3T<REAL> t)
 	{
 		s.normalize();
 		t.normalize();
@@ -776,37 +797,43 @@ namespace flow
 		m_row[0][3] = m_row[1][3] = m_row[2][3] = REAL(0.0);
 		m_row[3][0] = m_row[3][1] = m_row[3][2] = REAL(0.0);
 		m_row[3][3] = REAL(1.0);
+
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeScale(REAL sx, REAL sy, REAL sz)
+	Matrix4T<REAL>& Matrix4T<REAL>::makeScale(REAL sx, REAL sy, REAL sz)
 	{
 		m_row[0][0] = sx;        m_row[0][1] = REAL(0.0); m_row[0][2] = REAL(0.0); m_row[0][3] = REAL(0.0);
 		m_row[1][0] = REAL(0.0); m_row[1][1] = sy;        m_row[1][2] = REAL(0.0); m_row[1][3] = REAL(0.0);
 		m_row[2][0] = REAL(0.0); m_row[2][1] = REAL(0.0); m_row[2][2] = sz;        m_row[2][3] = REAL(0.0);
 		m_row[3][0] = REAL(0.0); m_row[3][1] = REAL(0.0); m_row[3][2] = REAL(0.0); m_row[3][3] = REAL(1.0);
+
+		return *this;
 	}
 
 	// ----- Cameras -----
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeLookAtCamera(
+	Matrix4T<REAL>& Matrix4T<REAL>::makeLookAtCamera(
 		const Vector3T<REAL>& viewer, const Vector3T<REAL>& target, const Vector3T<REAL>& up)
 	{
 		F_ASSERT(false);
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeOrbitCamera(
+	Matrix4T<REAL>& Matrix4T<REAL>::makeOrbitCamera(
 		const Vector3T<REAL>& target, const Vector3T<REAL>& yawPitchRoll, REAL distance)
 	{
 		F_ASSERT(false);
+		return *this;
 	}
 
 	// ----- Projections -----
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeProjectionOrthogonalLH(
+	Matrix4T<REAL>& Matrix4T<REAL>::makeProjectionOrthogonalLH(
 		REAL width, REAL height, REAL n, REAL f,
 		const Vector2T<REAL> center /* = Vector2T<REAL> */)
 	{
@@ -827,10 +854,12 @@ namespace flow
 		m_row[0][1] = m_row[0][2] = m_row[1][0] = m_row[1][2] = m_row[2][0] = m_row[2][1] = REAL(0.0);
 		m_row[3][0] = m_row[3][1] = m_row[3][2] = REAL(0.0);
 		m_row[3][3] = REAL(1.0);
+
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeProjectionOrthogonalRH(
+	Matrix4T<REAL>& Matrix4T<REAL>::makeProjectionOrthogonalRH(
 		REAL width, REAL height, REAL n, REAL f,
 		const Vector2T<REAL> center /* = Vector2T<REAL> */)
 	{
@@ -849,10 +878,12 @@ namespace flow
 		m_row[0][1] = m_row[0][2] = m_row[1][0] = m_row[1][2] = m_row[2][0] = m_row[2][1] = REAL(0.0);
 		m_row[3][0] = m_row[3][1] = m_row[3][2] = REAL(0.0);
 		m_row[3][3] = REAL(1.0);
+
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeProjectionPerspectiveLH(
+	Matrix4T<REAL>& Matrix4T<REAL>::makeProjectionPerspectiveLH(
 		REAL fov, bool fovVertical, REAL aspect, REAL n, REAL f,
 		const Vector2T<REAL> center /* = Vector2T<REAL> */)
 	{
@@ -884,10 +915,12 @@ namespace flow
 		m_row[0][1] = m_row[0][3] = m_row[1][0] = m_row[1][3] = m_row[2][0] = m_row[2][1] = REAL(0.0);
 		m_row[3][0] = m_row[3][1] = m_row[3][3] = REAL(0.0);
 		m_row[3][2] = REAL(1.0);
+
+		return *this;
 	}
 
 	template <typename REAL>
-	void Matrix4T<REAL>::makeProjectionPerspectiveRH(
+	Matrix4T<REAL>& Matrix4T<REAL>::makeProjectionPerspectiveRH(
 		REAL fov, bool fovVertical, REAL aspect, REAL n, REAL f,
 		const Vector2T<REAL> center /* = Vector2T<REAL> */)
 	{
@@ -919,12 +952,14 @@ namespace flow
 		m_row[0][1] = m_row[0][3] = m_row[1][0] = m_row[1][3] = m_row[2][0] = m_row[2][1] = REAL(0.0);
 		m_row[3][0] = m_row[3][1] = m_row[3][3] = REAL(0.0);
 		m_row[3][2] = REAL(1.0);
+
+		return *this;
 	}
 
 	// Public queries --------------------------------------------------------------
 
 	template <typename REAL>
-	void Matrix4T<REAL>::extractRotation(OUT Matrix3T<REAL>& mat)
+	void Matrix4T<REAL>::extractRotation(OUT Matrix3T<REAL>& mat) const
 	{
 		mat[0].copyFrom(m_row[0].ptr());
 		mat[1].copyFrom(m_row[1].ptr());
@@ -939,13 +974,22 @@ namespace flow
 	}
 
 	template <typename REAL>
-	inline json Matrix4T<REAL>::toJSON() const
+	inline json Matrix4T<REAL>::toJSON(storage_t storageOrder /* = Matrix4T<REAL>::ColumnMajor */) const
 	{
 		auto arr = json::array();
 
-		for (int r = 0; r < 4; r++) {
+		if (storageOrder == RowMajor) {
+			for (int r = 0; r < 4; r++) {
+				for (int c = 0; c < 4; c++) {
+					arr.push_back(m_row[r][c]);
+				}
+			}
+		}
+		else {
 			for (int c = 0; c < 4; c++) {
-				arr.push_back(m_row[r][c]);
+				for (int r = 0; r < 4; r++) {
+					arr.push_back(m_row[r][c]);
+				}
 			}
 		}
 

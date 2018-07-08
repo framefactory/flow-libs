@@ -46,22 +46,23 @@ namespace flow
 	public:
 		// Types
 		typedef std::vector<std::string> stringVec_t;
-		typedef std::vector<GLTFScene*> sceneVec_t;
-		typedef std::vector<GLTFNode*> nodeVec_t;
-		typedef std::vector<GLTFMesh*> meshVec_t;
-		typedef std::vector<GLTFSkin*> skinVec_t;
-		typedef std::vector<GLTFCamera*> cameraVec_t;
+		typedef std::vector<const GLTFExtension*> extensionVec_t;
+		typedef std::vector<const GLTFScene*> sceneVec_t;
+		typedef std::vector<const GLTFNode*> nodeVec_t;
+		typedef std::vector<const GLTFMesh*> meshVec_t;
+		typedef std::vector<const GLTFSkin*> skinVec_t;
+		typedef std::vector<const GLTFCamera*> cameraVec_t;
 
-		typedef std::vector<GLTFBuffer*> bufferVec_t;
-		typedef std::vector<GLTFBufferView*> bufferViewVec_t;
-		typedef std::vector<GLTFAccessor*> accessorVec_t;
+		typedef std::vector<const GLTFBuffer*> bufferVec_t;
+		typedef std::vector<const GLTFBufferView*> bufferViewVec_t;
+		typedef std::vector<const GLTFAccessor*> accessorVec_t;
 
-		typedef std::vector<GLTFMaterial*> materialVec_t;
-		typedef std::vector<GLTFTexture*> textureVec_t;
-		typedef std::vector<GLTFImage*> imageVec_t;
-		typedef std::vector<GLTFSampler*> samplerVec_t;
+		typedef std::vector<const GLTFMaterial*> materialVec_t;
+		typedef std::vector<const GLTFTexture*> textureVec_t;
+		typedef std::vector<const GLTFImage*> imageVec_t;
+		typedef std::vector<const GLTFSampler*> samplerVec_t;
 
-		typedef std::vector<GLTFAnimation*> animationVec_t;
+		typedef std::vector<const GLTFAnimation*> animationVec_t;
 
 		GLTFAsset();
 		virtual ~GLTFAsset();
@@ -74,7 +75,7 @@ namespace flow
 		void setGenerator(const std::string& generator);
 		void setCopyright(const std::string& copyright);
 
-		void addExtension(const GLTFExtension& extension, bool isRequired);
+		void addExtension(const GLTFExtension* pExtension, bool isRequired);
 
 		GLTFScene* createScene(const std::string& name = std::string{});
 
@@ -123,7 +124,7 @@ namespace flow
 
 		const GLTFScene* _pMainScene;
 
-		stringVec_t _extensionsUsed;
+		extensionVec_t _extensionsUsed;
 		stringVec_t _extensionsRequired;
 
 		sceneVec_t _scenes;

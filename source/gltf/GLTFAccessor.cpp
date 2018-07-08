@@ -40,6 +40,29 @@ void GLTFAccessor::setInterleaved(size_t byteOffset, size_t byteStride)
 	_byteStride = _byteStride;
 }
 
+void GLTFAccessor::addData(GLTFBuffer* pBuffer, const char* pData, size_t byteLength, GLTFBufferViewTarget target)
+{
+	_pBufferView = pBuffer->addData(pData, byteLength);
+	_pBufferView->setTarget(target);
+}
+
+char* GLTFAccessor::allocateData(GLTFBuffer* pBuffer, size_t byteLength, GLTFBufferViewTarget target)
+{
+	_pBufferView = pBuffer->allocate(byteLength);
+	_pBufferView->setTarget(target);
+
+	return _pBufferView->data();
+}
+
+const char* GLTFAccessor::data() const
+{
+	if (!_pBufferView) {
+		return nullptr;
+	}
+
+	return _pBufferView->data();
+}
+
 json GLTFAccessor::toJSON() const
 {
 	json result = GLTFMainElement::toJSON();
@@ -61,24 +84,4 @@ json GLTFAccessor::toJSON() const
 	}
 
 	return result;
-}
-
-char* GLTFAccessor::_allocate(GLTFBuffer* pBuffer, size_t byteLength)
-{
-	_pBufferView = pBuffer->allocate(byteLength);
-	return _pBufferView->data();
-}
-
-void GLTFAccessor::_setData(GLTFBuffer* pBuffer, const char* pData, size_t byteLength)
-{
-	_pBufferView = pBuffer->addData(pData, byteLength);
-}
-
-const char* GLTFAccessor::_getData() const
-{
-	if (!_pBufferView) {
-		return nullptr;
-	}
-
-	return _pBufferView->data();
 }

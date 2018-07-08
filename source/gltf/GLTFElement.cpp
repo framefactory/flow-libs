@@ -6,14 +6,15 @@
 */
 
 #include "GLTFElement.h"
+#include "GLTFExtension.h"
 
 using namespace flow;
 using std::string;
 
 
-void GLTFElement::addExtension(string& prop, const json& jsonData)
+void GLTFElement::addExtension(const GLTFExtension* pExtension)
 {
-	_extensions[prop] = jsonData;
+	_extensions.push_back(pExtension);
 }
 
 void GLTFElement::setExtras(const json& jsonData)
@@ -26,7 +27,11 @@ json GLTFElement::toJSON() const
 	json result;
 
 	if (!_extensions.empty()) {
-		result["extensions"] = _extensions;
+		json extensions;
+		for (size_t i = 0; i < _extensions.size(); ++i) {
+			extensions[_extensions[i]->name()] = _extensions[i]->toJSON();
+		}
+		result["extensions"] = extensions;
 	}
 	if (!_extras.empty()) {
 		result["extras"] = _extras;

@@ -31,8 +31,10 @@ namespace flow
 		virtual ~GLTFAccessorT() { }
 
 	public:
-		T * allocate(GLTFBuffer* pBuffer, size_t elementCount);
-		void setData(GLTFBuffer* pBuffer, const T* pData, size_t elementCount);
+		T * allocateVertexData(GLTFBuffer* pBuffer, size_t elementCount);
+		T * allocateIndexData(GLTFBuffer* pBuffer, size_t elementCount);
+		void addVertexData(GLTFBuffer* pBuffer, const T* pData, size_t elementCount);
+		void addIndexData(GLTFBuffer* pBuffer, const T* pData, size_t elementCount);
 		void updateBounds();
 
 		std::vector<T>& min() { return _min; }
@@ -41,7 +43,7 @@ namespace flow
 		std::vector<T>& max() { return _max }
 		const std::vector<T>& max() const { return _max }
 
-		constexpr GLTFAccessorComponent component() const { return GLTFAccessorComponent::type<T>(); }
+		virtual GLTFAccessorComponent component() const { return GLTFAccessorComponent::type<T>(); }
 		
 		virtual json toJSON() const;
 
@@ -51,21 +53,39 @@ namespace flow
 	};
 
 	template<typename T>
-	T* GLTFAccessorT<T>::allocate(GLTFBuffer* pBuffer, size_t elementCount)
+	T* GLTFAccessorT<T>::allocateVertexData(GLTFBuffer* pBuffer, size_t elementCount)
 	{
 		_count = elementCount;
 
 		size_t byteLength = elementCount * _type.componentCount() * sizeof(T);
-		return (T*)_allocate(pBuffer, byteLength);
+		return (T*)allocateData(pBuffer, byteLength, GLTFBufferViewTarget::ARRAY_BUFFER);
 	}
 
 	template<typename T>
-	void GLTFAccessorT<T>::setData(GLTFBuffer* pBuffer, const T* pData, size_t elementCount)
+	T* GLTFAccessorT<T>::allocateIndexData(GLTFBuffer* pBuffer, size_t elementCount)
 	{
 		_count = elementCount;
 
 		size_t byteLength = elementCount * _type.componentCount() * sizeof(T);
-		_setData(pBuffer, (const char*)pData, byteLength);
+		return (T*)allocateData(pBuffer, byteLength, GLTFBufferViewTarget::ELEMENT_ARRAY_BUFFER);
+	}
+
+	template<typename T>
+	void GLTFAccessorT<T>::addVertexData(GLTFBuffer* pBuffer, const T* pData, size_t elementCount)
+	{
+		_count = elementCount;
+
+		size_t byteLength = elementCount * _type.componentCount() * sizeof(T);
+		addData(pBuffer, (const char*)pData, byteLength, GLTFBufferViewTarget::ARRAY_BUFFER);
+	}
+
+	template<typename T>
+	void GLTFAccessorT<T>::addIndexData(GLTFBuffer* pBuffer, const T* pData, size_t elementCount)
+	{
+		_count = elementCount;
+
+		size_t byteLength = elementCount * _type.componentCount() * sizeof(T);
+		addData(pBuffer, (const char*)pData, byteLength, GLTFBufferViewTarget::ELEMENT_ARRAY_BUFFER);
 	}
 
 	template<typename T>
@@ -73,7 +93,7 @@ namespace flow
 	{
 		size_t n = _count;
 		size_t cc = _type.componentCount();
-		const T* pData = (const T*)_getData();
+		const T* pData = (const T*)data();
 
 		_max.resize(cc);
 		_min.resize(cc);

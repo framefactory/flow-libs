@@ -16,23 +16,27 @@
 
 namespace flow
 {
+	class GLTFExtension;
+
 	class F_GLTF_EXPORT GLTFElement
 	{
 	public:
+		typedef std::vector<const GLTFExtension*> extensionVec_t;
+
 		GLTFElement() {}
 		virtual ~GLTFElement() {}
 
-		void addExtension(std::string& prop, const json& jsonData);
+		void addExtension(const GLTFExtension* pExtension);
 		void setExtras(const json& jsonData);
 
-		const json extensions() const { return _extensions; }
+		const extensionVec_t& extensions() const { return _extensions; }
 		const json extras() const { return _extras; }
 
 		virtual json toJSON() const;
 		virtual std::string toString(int indent = -1) const;
 
 	protected:
-		json _extensions;
+		extensionVec_t _extensions;
 		json _extras;
 	};
 }
