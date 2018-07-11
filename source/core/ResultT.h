@@ -42,6 +42,8 @@ namespace flow
 		}
 	}
 
+	class Result;
+
 	template<typename T>
 	class ResultT
 	{
@@ -53,6 +55,7 @@ namespace flow
 			return ResultT<T>(ResultState::ERROR, message);
 		}
 
+		ResultT(const Result& result);
 		ResultT(ResultState state = ResultState::ERROR, const std::string& message = std::string{});
 		ResultT(const T& value, ResultState state = ResultState::OK, const std::string& message = std::string{});
 		ResultT(T&& value, ResultState state = ResultState::OK, const std::string& message = std::string{});
@@ -92,7 +95,45 @@ namespace flow
 	{
 	}
 
-	typedef ResultT<int> Result;
+	////////////////////////////////////////////////////////////////////////////////
+
+	class Result
+	{
+	public:
+		static Result ok(const std::string& message = std::string{}) {
+			return Result(ResultState::OK, message);
+		}
+		static Result error(const std::string& message = std::string{}) {
+			return Result(ResultState::ERROR, message);
+		}
+
+		Result(ResultState state = ResultState::ERROR, const std::string& message = std::string{}) :
+			_state(state),
+			_message(message) { }
+
+		template<typename T>
+		Result(const ResultT<T>& result) :
+			_state(result.state()),
+			_message(result.message()) { }
+
+		bool isOK() const { return _state == ResultState::OK; }
+		bool isError() const { return _state == ResultState::ERROR; }
+		const ResultState state() const { return _state; }
+		const std::string& message() const { return _message; }
+
+	private:
+		ResultState _state;
+		std::string _message;
+	};
+
+	////////////////////////////////////////////////////////////////////////////////
+
+	template<typename T>
+	ResultT<T>::ResultT(const Result& result) :
+		_state(result.state()),
+		_message(result.message())
+	{
+	}
 }
 
 #endif // _FLOWLIBS_RESULTT_H
