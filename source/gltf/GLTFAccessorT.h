@@ -35,7 +35,7 @@ namespace flow
 		T * allocateIndexData(GLTFBuffer* pBuffer, size_t elementCount);
 		void addVertexData(GLTFBuffer* pBuffer, const T* pData, size_t elementCount);
 		void addIndexData(GLTFBuffer* pBuffer, const T* pData, size_t elementCount);
-		void updateBounds();
+		void updateBounds(const T* pData = nullptr);
 
 		std::vector<T>& min() { return _min; }
 		const std::vector<T>& min() const { return _min; }
@@ -89,11 +89,17 @@ namespace flow
 	}
 
 	template<typename T>
-	void GLTFAccessorT<T>::updateBounds()
+	void GLTFAccessorT<T>::updateBounds(const T* pData /* = nullptr */)
 	{
+		if (!pData) {
+			pData = (const T*)data();
+			if (!pData) {
+				throw std::exception("no data source specified");
+			}
+		}
+
 		size_t n = _count;
 		size_t cc = _type.componentCount();
-		const T* pData = (const T*)data();
 
 		_max.resize(cc);
 		_min.resize(cc);

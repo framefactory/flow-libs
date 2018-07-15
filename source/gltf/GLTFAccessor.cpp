@@ -54,6 +54,11 @@ char* GLTFAccessor::allocateData(GLTFBuffer* pBuffer, size_t byteLength, GLTFBuf
 	return _pBufferView->data();
 }
 
+void GLTFAccessor::setElementCount(size_t elementCount)
+{
+	_count = elementCount;
+}
+
 const char* GLTFAccessor::data() const
 {
 	if (!_pBufferView) {

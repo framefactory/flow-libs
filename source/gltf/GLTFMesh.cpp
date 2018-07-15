@@ -32,6 +32,13 @@ void GLTFMesh::addWeight(float weight)
 	_weights.push_back(weight);
 }
 
+void GLTFMesh::setMaterial(const GLTFMaterial* pMaterial)
+{
+	for (auto& prim : _primitives) {
+		prim.setMaterial(pMaterial);
+	}
+}
+
 json GLTFMesh::toJSON() const
 {
 	json primArr = json::array();

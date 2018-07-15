@@ -24,7 +24,7 @@ void GLTFElement::setExtras(const json& jsonData)
 
 json GLTFElement::toJSON() const
 {
-	json result;
+	json result = json::object();
 
 	if (!_extensions.empty()) {
 		json extensions;

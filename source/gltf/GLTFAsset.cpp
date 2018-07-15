@@ -173,7 +173,7 @@ GLTFBuffer* GLTFAsset::createBuffer(const string& name /* = string{} */)
 
 GLTFMaterial* GLTFAsset::createMaterial(const string& name /* = string{} */)
 {
-	auto pMaterial = new GLTFMaterial(_materials.size());
+	auto pMaterial = new GLTFMaterial(_materials.size(), name);
 	_materials.push_back(pMaterial);
 	return pMaterial;
 }

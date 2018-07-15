@@ -37,6 +37,7 @@ namespace flow
 		void setInterleaved(size_t byteOffset, size_t byteStride);
 		void addData(GLTFBuffer* pBuffer, const char* pData, size_t byteLength, GLTFBufferViewTarget target);
 		char* allocateData(GLTFBuffer* pBuffer, size_t byteLength, GLTFBufferViewTarget target);
+		void setElementCount(size_t elementCount);
 
 		const char* data() const;
 
