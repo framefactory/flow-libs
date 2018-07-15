@@ -10,6 +10,8 @@
 #include "GLTFAccessor.h"
 #include "GLTFAsset.h"
 
+#include "../core/Bit.h"
+
 #include <fstream>
 #include <cstring>
 
@@ -26,9 +28,9 @@ GLTFBuffer::GLTFBuffer(GLTFAsset* pAsset, size_t index, const string& name /* = 
 {
 }
 
-GLTFBufferView* GLTFBuffer::addData(const char* pData, size_t byteLength)
+GLTFBufferView* GLTFBuffer::addData(const char* pData, size_t byteLength, bool align /* = true */)
 {
-	auto pBufferView = allocate(byteLength);
+	auto pBufferView = allocate(byteLength, align);
 	std::memcpy(pBufferView->data(), pData, byteLength);
 
 	return pBufferView;
@@ -43,7 +45,7 @@ GLTFBufferView* GLTFBuffer::addImage(const string& imageFilePath)
 
 	size_t byteLength = (size_t)stream.tellg();
 
-	auto pBufferView = allocate(byteLength);
+	auto pBufferView = allocate(byteLength, false);
 	
 	stream.seekg(0);
 	stream.read(pBufferView->data(), byteLength);
@@ -52,9 +54,9 @@ GLTFBufferView* GLTFBuffer::addImage(const string& imageFilePath)
 	return pBufferView;
 }
 
-GLTFBufferView* GLTFBuffer::allocate(size_t byteLength)
+GLTFBufferView* GLTFBuffer::allocate(size_t byteLength, bool align)
 {
-	size_t byteStart = _buffer.size();
+	size_t byteStart = align ? Bit::ceil4(_buffer.size()) : _buffer.size();
 	size_t newBufferSize = byteStart + byteLength;
 
 	_buffer.resize(newBufferSize);

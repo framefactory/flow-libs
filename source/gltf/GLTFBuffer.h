@@ -32,9 +32,9 @@ namespace flow
 		virtual ~GLTFBuffer() { };
 
 	public:
-		GLTFBufferView* addData(const char* pData, size_t byteLength);
+		GLTFBufferView* addData(const char* pData, size_t byteLength, bool align = true);
 		GLTFBufferView* addImage(const std::string& imageFilePath);
-		GLTFBufferView* allocate(size_t byteLength);
+		GLTFBufferView* allocate(size_t byteLength, bool align = true);
 
 		void setUri(const std::string& uri);
 		bool save(const std::string& bufferFilePath);
