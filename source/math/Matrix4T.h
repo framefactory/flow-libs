@@ -202,13 +202,17 @@ namespace flow
 
 		//  Public queries -----------------------------------------------
 
+		/// Returns true if all components are zero.
+		bool isZero() const;
+		/// Returns true if matrix is identity.
+		bool isIdentity() const;
 		/// Extracts the upper left 3x3 rotation matrix.
 		void extractRotation(OUT Matrix3T<REAL>& rotationMatrix) const;
 		/// Calculates and returns the determinant of the matrix.
 		REAL determinant() const;
 
 		/// Converts the vector to a JSON array.
-		json toJSON(storage_t storageOrder  = ColumnMajor) const;
+		json toJSON(storage_t storageOrder  = RowMajor) const;
 
 		//  Internal data members ----------------------------------------
 
@@ -959,6 +963,28 @@ namespace flow
 	// Public queries --------------------------------------------------------------
 
 	template <typename REAL>
+	bool Matrix4T<REAL>::isZero() const
+	{
+		const REAL zro = REAL(0.0);
+		return m_row[0][0] == zro && m_row[0][1] == zro && m_row[0][2] == zro && m_row[0][3] == zro &&
+			   m_row[1][0] == zro && m_row[1][1] == zro && m_row[1][2] == zro && m_row[1][3] == zro &&
+			   m_row[2][0] == zro && m_row[2][1] == zro && m_row[2][2] == zro && m_row[2][3] == zro &&
+			   m_row[3][0] == zro && m_row[3][1] == zro && m_row[3][2] == zro && m_row[3][3] == zro;
+	}
+
+	template <typename REAL>
+	bool Matrix4T<REAL>::isIdentity() const
+	{
+		const REAL zro = REAL(0.0);
+		const REAL one = REAL(1.0);
+		return m_row[0][0] == one && m_row[0][1] == zro && m_row[0][2] == zro && m_row[0][3] == zro &&
+			   m_row[1][0] == zro && m_row[1][1] == one && m_row[1][2] == zro && m_row[1][3] == zro &&
+			   m_row[2][0] == zro && m_row[2][1] == zro && m_row[2][2] == one && m_row[2][3] == zro &&
+			   m_row[3][0] == zro && m_row[3][1] == zro && m_row[3][2] == zro && m_row[3][3] == one;
+
+	}
+
+	template <typename REAL>
 	void Matrix4T<REAL>::extractRotation(OUT Matrix3T<REAL>& mat) const
 	{
 		mat[0].copyFrom(m_row[0].ptr());
@@ -974,7 +1000,7 @@ namespace flow
 	}
 
 	template <typename REAL>
-	inline json Matrix4T<REAL>::toJSON(storage_t storageOrder /* = Matrix4T<REAL>::ColumnMajor */) const
+	inline json Matrix4T<REAL>::toJSON(storage_t storageOrder /* = Matrix4T<REAL>::RowMajor */) const
 	{
 		auto arr = json::array();
 
