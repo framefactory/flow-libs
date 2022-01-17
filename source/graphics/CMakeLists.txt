@@ -20,6 +20,9 @@ add_library(FlowGraphics STATIC ${AllFiles})
 add_definitions(-DF_GRAPHICS_LIB)
 set_property(TARGET FlowGraphics PROPERTY FOLDER "_libs")
 
+# compiler flags
+target_compile_features(FloGraphics PRIVATE cxx_std_11)
+
 # ------------------------------------------------------------------------------
 # INSTALL TARGET
 

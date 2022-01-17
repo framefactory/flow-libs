@@ -266,7 +266,7 @@ GLTFSampler* GLTFAsset::createSampler()
 GLTFAnimation* GLTFAsset::createAnimation()
 {
 	// TODO: Implement
-	throw exception("not implemented yet");
+	throw std::runtime_error("not implemented yet");
 }
 
 json GLTFAsset::toJSON() const

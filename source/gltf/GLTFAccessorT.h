@@ -25,7 +25,7 @@ namespace flow
 		friend class GLTFAsset;
 
 	protected:
-		GLTFAccessorT(size_t index, GLTFAccessorType type, std::string& name = std::string{}) :
+		GLTFAccessorT(size_t index, GLTFAccessorType type, std::string const & name = std::string{}) :
 			GLTFAccessor(index, type, name) { }
 		
 		virtual ~GLTFAccessorT() { }
@@ -94,7 +94,7 @@ namespace flow
 		if (!pData) {
 			pData = (const T*)data();
 			if (!pData) {
-				throw std::exception("no data source specified");
+				throw std::runtime_error("no data source specified");
 			}
 		}
 

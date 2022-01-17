@@ -11,6 +11,7 @@
 #include "library.h"
 #include "GLTFMainElement.h"
 #include "GLTFAccessor.h"
+#include "GLTFAsset.h"
 
 #include "../math/Vector2T.h"
 #include "../math/Vector3T.h"
