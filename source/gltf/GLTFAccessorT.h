@@ -40,8 +40,8 @@ namespace flow
 		std::vector<T>& min() { return _min; }
 		const std::vector<T>& min() const { return _min; }
 
-		std::vector<T>& max() { return _max }
-		const std::vector<T>& max() const { return _max }
+		std::vector<T>& max() { return _max; }
+		const std::vector<T>& max() const { return _max; }
 
 		virtual GLTFAccessorComponent component() const { return GLTFAccessorComponent::type<T>(); }
 		
