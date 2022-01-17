@@ -8,7 +8,10 @@
 #include "DebugStream.h"
 
 #include <iostream>
+
+#if defined(WIN32)
 #include <Windows.h>
+#endif
 
 
 using namespace flow;
@@ -38,8 +41,11 @@ void DebugStream::start()
 
 int DebugStream::sync()
 {
+
+#if defined(WIN32)
 	::OutputDebugStringA(str().c_str());
 	str(string{});
+#endif
 
 	return 0;
 }
