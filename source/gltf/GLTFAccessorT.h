@@ -25,7 +25,7 @@ namespace flow
 		friend class GLTFAsset;
 
 	protected:
-		GLTFAccessorT(size_t index, GLTFAccessorType type, std::string& name = std::string{}) :
+		GLTFAccessorT(size_t index, GLTFAccessorType type, std::string const & name = std::string{}) :
 			GLTFAccessor(index, type, name) { }
 		
 		virtual ~GLTFAccessorT() { }
@@ -40,8 +40,8 @@ namespace flow
 		std::vector<T>& min() { return _min; }
 		const std::vector<T>& min() const { return _min; }
 
-		std::vector<T>& max() { return _max }
-		const std::vector<T>& max() const { return _max }
+		std::vector<T>& max() { return _max; }
+		const std::vector<T>& max() const { return _max; }
 
 		virtual GLTFAccessorComponent component() const { return GLTFAccessorComponent::type<T>(); }
 		
@@ -94,7 +94,7 @@ namespace flow
 		if (!pData) {
 			pData = (const T*)data();
 			if (!pData) {
-				throw std::exception("no data source specified");
+				throw std::runtime_error("no data source specified");
 			}
 		}
 

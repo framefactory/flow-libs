@@ -28,7 +28,7 @@ namespace flow
 	class F_GLTF_EXPORT GLTFAccessor : public GLTFMainElement
 	{
 	protected:
-		GLTFAccessor(size_t index, GLTFAccessorType type, std::string& name);
+		GLTFAccessor(size_t index, GLTFAccessorType type, std::string const & name);
 
 	public:
 		virtual ~GLTFAccessor() {}

@@ -15,7 +15,7 @@ using std::string;
 using std::vector;
 
 
-GLTFAccessor::GLTFAccessor(size_t index, GLTFAccessorType type, string& name /* = std::string{} */) :
+GLTFAccessor::GLTFAccessor(size_t index, GLTFAccessorType type, string const & name /* = std::string{} */) :
 	GLTFMainElement(index, name),
 	_pBufferView(nullptr),
 	_type(type),

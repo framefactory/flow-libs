@@ -20,6 +20,9 @@ add_library(FlowCore STATIC ${AllFiles})
 add_definitions(-DF_CORE_LIB)
 set_property(TARGET FlowCore PROPERTY FOLDER "_libs")
 
+# compiler flags
+target_compile_features(FlowCore PRIVATE cxx_std_11)
+
 # ------------------------------------------------------------------------------
 # INSTALL TARGET
 

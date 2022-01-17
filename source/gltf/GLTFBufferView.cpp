@@ -41,10 +41,10 @@ json GLTFBufferView::toJSON() const
 	json result = GLTFMainElement::toJSON();
 
 	if (!_pBuffer) {
-		throw std::exception("GLTFBufferView: buffer not set");
+		throw std::logic_error("GLTFBufferView: buffer not set");
 	}
 	if (_byteLength == 0) {
-		throw std::exception("GLTFBufferView: byteLength not set");
+		throw std::logic_error("GLTFBufferView: byteLength not set");
 	}
 	
 	result["buffer"] = _pBuffer->index();

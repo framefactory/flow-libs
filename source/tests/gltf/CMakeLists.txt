@@ -26,6 +26,9 @@ add_executable(glTFTest ${AllFiles})
 set_target_properties(glTFTest PROPERTIES DEBUG_POSTFIX "d")
 set_property(TARGET glTFTest PROPERTY FOLDER "_apps")
 
+# compiler flags
+target_compile_features(glTFTest PRIVATE cxx_std_11)
+
 target_include_directories(glTFTest BEFORE PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/source
 #	Qt5::Core

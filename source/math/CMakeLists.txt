@@ -20,6 +20,9 @@ add_library(FlowMath STATIC ${AllFiles})
 add_definitions(-DF_MATH_LIB)
 set_property(TARGET FlowMath PROPERTY FOLDER "_libs")
 
+# compiler flags
+target_compile_features(FlowMath PRIVATE cxx_std_11)
+
 # ------------------------------------------------------------------------------
 # INSTALL TARGET
 

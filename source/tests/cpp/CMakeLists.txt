@@ -20,6 +20,9 @@ add_executable(CPPTest ${AllFiles})
 set_target_properties(CPPTest PROPERTIES DEBUG_POSTFIX "d")
 set_property(TARGET CPPTest PROPERTY FOLDER "_apps")
 
+# compiler flags
+target_compile_features(CPPTest PRIVATE cxx_std_11)
+
 target_include_directories(CPPTest BEFORE PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/source
 )

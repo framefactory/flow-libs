@@ -20,6 +20,9 @@ add_library(FlowGLTF STATIC ${AllFiles})
 add_definitions(-DF_GLTF_LIB)
 set_property(TARGET FlowGLTF PROPERTY FOLDER "_libs")
 
+# compiler flags
+target_compile_features(FlowGLTF PRIVATE cxx_std_11)
+
 # ------------------------------------------------------------------------------
 # INSTALL TARGET
 

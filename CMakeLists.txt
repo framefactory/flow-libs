@@ -3,27 +3,22 @@ cmake_minimum_required(VERSION 3.9.0)
 # ------------------------------------------------------------------------------
 # MAIN PROJECT
 
-project(FlowLibs VERSION 0.1)
-enable_language(CXX)
+project(FlowLibs VERSION 0.1 LANGUAGES CXX)
 
 # ------------------------------------------------------------------------------
 # GLOBAL SETTINGS
 
 #Compiler flags
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -Wall")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -Wall")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -msse4")
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 #    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W2")
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-endif()
 
-# Output directories
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/debug)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/release)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/bin/debug)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin/release)
+    # Output directories
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/debug)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/release)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/bin/debug)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin/release)
+endif()
 
 # Append "d" to all debug libraries
 set(CMAKE_DEBUG_POSTFIX "d")
@@ -35,10 +30,6 @@ set(CMAKE_AUTOMOC ON)
 # this prevents the console to be shown on windows
 if(WIN32)
   set(GUI_TYPE WIN32)
-endif()
-
-if(APPLE)
-  set(GUI_TYPE MACOSX_BUNDLE)
 endif()
 
 # ------------------------------------------------------------------------------

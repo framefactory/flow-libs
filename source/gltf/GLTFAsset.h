@@ -91,7 +91,7 @@ namespace flow
 		GLTFBuffer* createBuffer(const std::string& name = std::string{});
 		
 		template<typename T>
-		GLTFAccessorT<T>* createAccessor(GLTFAccessorType type, std::string& name = std::string{});
+		GLTFAccessorT<T>* createAccessor(GLTFAccessorType type, std::string const & name = std::string{});
 
 		GLTFMaterial* createMaterial(const std::string& name = std::string{});
 
@@ -147,7 +147,7 @@ namespace flow
 	};
 
 	template<typename T>
-	GLTFAccessorT<T>* GLTFAsset::createAccessor(GLTFAccessorType type, std::string& name)
+	GLTFAccessorT<T>* GLTFAsset::createAccessor(GLTFAccessorType type, std::string const & name)
 	{
 		auto pAccessor = new GLTFAccessorT<T>(_accessors.size(), type, name);
 		_accessors.push_back(pAccessor);
