@@ -1,14 +1,3 @@
 # Flow Libraries
-Suite of statically linkable C++ Libraries, including:
+This library has been merged into framefactory/flow and is deprecated.
 
-## Core
-Core tools and utilities.
-
-## Math
-Math tools and utilities, including fast Vector and Matrix classes.
-
-## Graphics
-Graphics tools and utilities.
-
-## GLTF
-glTF tools for helping with the Khronos glTF web graphics transmission format.
